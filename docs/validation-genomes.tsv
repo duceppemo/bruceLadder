@@ -1,88 +1,88 @@
-species	strain	accession
-abortus	9-941	GCF_000008145.1
-abortus	A19	GCF_003290345.1
-abortus	BDW	GCF_000740135.1
-abortus	BER	GCF_000740155.1
-abortus	BFY	GCF_000740315.1
-abortus	CIIMS-NV-4	GCF_002895145.1
-abortus	LBAB008	GCF_030761375.1
-abortus	LBAB009	GCF_030761395.1
-abortus	LBAB016	GCF_030761615.1
-abortus	S19	GCF_038420195.1
-abortus	abortus_2308	GCF_000054005.1
-abortus	abortus_RB51	GCF_011801185.1
-abortus	abortus_S19	GCF_000018725.1
-canis	2009004498	GCF_001715365.1
-canis	2010009751	GCF_001715405.1
-canis	A52141	GCF_000238195.1
-canis	ATCC-23365	GCF_000018525.1
-canis	Brucella.canis	GCF_003010715.1
-canis	FDAARGOS_420	GCF_002591255.1
-canis	M-24	GCF_056582615.1
-canis	Oliveri	GCF_000530495.1
-canis	RM6-66	GCF_000740335.1
-canis	SVA13	GCF_000691585.1
-ceti	02-611	GCF_050815205.1
-ceti	B1-94	GCF_000158775.1
-ceti	BD1442	GCF_014193785.1
-ceti	DDE001	GCF_047324115.1
-ceti	DDE002	GCF_047324105.1
-ceti	DDE003	GCF_047324095.1
-ceti	M13-05-1	GCF_000157855.1
-ceti	M490-95-1	GCF_000158755.1
-ceti	M644-93-1	GCF_000157835.1
-ceti	TE10759-12	GCF_000590795.1
-melitensis	BL	GCF_002263015.1
-melitensis	BwIM_IRN_37	GCF_002191295.1
-melitensis	BwIM_SYR_04	GCF_002191455.1
-melitensis	BwIM_SYR_26	GCF_002192095.1
-melitensis	BwIM_TUR_03	GCF_002191615.1
-melitensis	BwIM_TUR_17	GCF_002191655.1
-melitensis	BwIM_TUR_19	GCF_002191675.1
-melitensis	BwIM_TUR_59	GCF_002191755.1
-melitensis	GTC-3P1517	GCF_055388155.1
-melitensis	GTC-3P1521	GCF_055389085.1
-melitensis	melitensis_16M	GCF_000007125.1
-microti	CCM-4915	GCF_000022745.1
-microti	NA	GCF_902807045.1
-microti	NA	GCF_966194465.1
-microti	NA	GCF_966194545.1
-microti	NA	GCF_966194825.1
-neotomae	5K33	GCF_000158715.1
-neotomae	5K33	GCF_000712255.1
-neotomae	5K33	GCF_000742255.1
-neotomae	NCTC10070	GCF_900446115.1
-neotomae	NCTC10071	GCF_900446105.1
-neotomae	NCTC10084	GCF_900446125.1
-ovis	63-96	GCF_000370885.1
-ovis	80-125	GCF_000367065.1
-ovis	81-8	GCF_000370905.1
-ovis	ATCC-25840	GCF_000016845.1
-ovis	Bo873	GCF_050496165.1
-ovis	IntaBari-1993-758	GCF_000366005.1
-ovis	IntaBari-2001-319-40	GCF_000365965.1
-ovis	IntaBari-2002-82-58	GCF_000365925.1
-ovis	IntaBari-2009-88-4	GCF_000366045.1
-ovis	IntaBari-2010-47-268	GCF_000371345.1
-pinnipedialis	23a-1	GCF_015624465.1
-pinnipedialis	6-566	GCF_000740275.1
-pinnipedialis	B2-94	GCF_000157815.1
-pinnipedialis	B2-94	GCF_000221005.1
-pinnipedialis	M163-99-10	GCF_000157795.1
-pinnipedialis	M292-94-1	GCF_000158675.1
-pinnipedialis	NA	GCF_963693205.1
-pinnipedialis	NA	GCF_963693225.1
-suis	513UK	GCF_000740235.1
-suis	ATCC-23445	GCF_000018905.1
-suis	Bs143CITA	GCF_000699025.1
-suis	Bs364CITA-I	GCF_000698325.1
-suis	Bs396CITA	GCF_000698345.1
-suis	CVI_213	GCF_014884405.1
-suis	PT09143	GCF_000698245.1
-suis	PT09172	GCF_000698285.1
-suis	ZW043	GCF_000755105.1
-suis	ZW046	GCF_000755085.1
-suis	suis_bv1_1330	GCF_000007505.1
-suis	suis_bv3_686	GCF_000740255.1
-suis	suis_bv4_CVI72	GCF_014884505.1
-suis	suis_bv5_CVI73	GCF_014884485.1
+species	strain	accession	bruce	suis	amos	rb51
+abortus	9-941	GCF_000008145.1	abortus	N/A	abortus_bv1_2_4	not_RB51
+abortus	A19	GCF_003290345.1	abortus	N/A	abortus_bv1_2_4	not_RB51
+abortus	BDW	GCF_000740135.1	abortus	N/A	abortus_bv1_2_4	not_RB51
+abortus	BER	GCF_000740155.1	abortus	N/A	N/A	not_RB51
+abortus	BFY	GCF_000740315.1	abortus	N/A	N/A	not_RB51
+abortus	CIIMS-NV-4	GCF_002895145.1	abortus	N/A	abortus_bv1_2_4	not_RB51
+abortus	LBAB008	GCF_030761375.1	abortus	N/A	N/A	not_RB51
+abortus	LBAB009	GCF_030761395.1	N/A	N/A	abortus_bv1_2_4	N/A
+abortus	LBAB016	GCF_030761615.1	abortus	N/A	abortus_bv1_2_4	not_RB51
+abortus	S19	GCF_038420195.1	S19	N/A	S19	not_RB51
+abortus	abortus_2308	GCF_000054005.1	abortus	N/A	RB51_or_2308	not_RB51
+abortus	abortus_RB51	GCF_011801185.1	RB51	N/A	RB51_or_2308	RB51
+abortus	abortus_S19	GCF_000018725.1	S19	N/A	S19	not_RB51
+canis	2009004498	GCF_001715365.1	canis	N/A	N/A	not_RB51
+canis	2010009751	GCF_001715405.1	N/A	N/A	N/A	not_RB51
+canis	A52141	GCF_000238195.1	canis	N/A	N/A	not_RB51
+canis	ATCC-23365	GCF_000018525.1	canis	N/A	N/A	not_RB51
+canis	Brucella.canis	GCF_003010715.1	canis	N/A	N/A	not_RB51
+canis	FDAARGOS_420	GCF_002591255.1	canis	N/A	N/A	not_RB51
+canis	M-24	GCF_056582615.1	canis	N/A	N/A	not_RB51
+canis	Oliveri	GCF_000530495.1	canis	N/A	N/A	not_RB51
+canis	RM6-66	GCF_000740335.1	canis	N/A	N/A	not_RB51
+canis	SVA13	GCF_000691585.1	N/A	N/A	N/A	not_RB51
+ceti	02-611	GCF_050815205.1	pinnipedialis_ceti	N/A	N/A	not_RB51
+ceti	B1-94	GCF_000158775.1	pinnipedialis_ceti	N/A	N/A	not_RB51
+ceti	BD1442	GCF_014193785.1	pinnipedialis_ceti	N/A	N/A	not_RB51
+ceti	DDE001	GCF_047324115.1	pinnipedialis_ceti	bv02	N/A	not_RB51
+ceti	DDE002	GCF_047324105.1	pinnipedialis_ceti	bv02	N/A	not_RB51
+ceti	DDE003	GCF_047324095.1	pinnipedialis_ceti	bv02	N/A	not_RB51
+ceti	M13-05-1	GCF_000157855.1	pinnipedialis_ceti	N/A	N/A	not_RB51
+ceti	M490-95-1	GCF_000158755.1	pinnipedialis_ceti	N/A	N/A	not_RB51
+ceti	M644-93-1	GCF_000157835.1	pinnipedialis_ceti	N/A	N/A	not_RB51
+ceti	TE10759-12	GCF_000590795.1	pinnipedialis_ceti	N/A	melitensis	not_RB51
+melitensis	BL	GCF_002263015.1	melitensis	N/A	melitensis	not_RB51
+melitensis	BwIM_IRN_37	GCF_002191295.1	melitensis	N/A	melitensis	not_RB51
+melitensis	BwIM_SYR_04	GCF_002191455.1	melitensis	N/A	melitensis	not_RB51
+melitensis	BwIM_SYR_26	GCF_002192095.1	melitensis	N/A	melitensis	not_RB51
+melitensis	BwIM_TUR_03	GCF_002191615.1	melitensis	N/A	melitensis	not_RB51
+melitensis	BwIM_TUR_17	GCF_002191655.1	melitensis	N/A	melitensis	not_RB51
+melitensis	BwIM_TUR_19	GCF_002191675.1	melitensis	N/A	melitensis	not_RB51
+melitensis	BwIM_TUR_59	GCF_002191755.1	melitensis	N/A	melitensis	not_RB51
+melitensis	GTC-3P1517	GCF_055388155.1	suis_bv2/suis_bv1_3_4	bv01	suis_bv1	not_RB51
+melitensis	GTC-3P1521	GCF_055389085.1	canis	N/A	N/A	not_RB51
+melitensis	melitensis_16M	GCF_000007125.1	melitensis	N/A	melitensis	not_RB51
+microti	CCM-4915	GCF_000022745.1	suis_bv2/suis_bv1_3_4	N/A	N/A	not_RB51
+microti	NA	GCF_902807045.1	suis_bv2/suis_bv1_3_4	N/A	N/A	not_RB51
+microti	NA	GCF_966194465.1	suis_bv2/suis_bv1_3_4	N/A	N/A	not_RB51
+microti	NA	GCF_966194545.1	suis_bv2/suis_bv1_3_4	N/A	N/A	not_RB51
+microti	NA	GCF_966194825.1	suis_bv2/suis_bv1_3_4	N/A	N/A	not_RB51
+neotomae	5K33	GCF_000158715.1	N/A	N/A	N/A	not_RB51
+neotomae	5K33	GCF_000712255.1	neotomae	N/A	N/A	not_RB51
+neotomae	5K33	GCF_000742255.1	neotomae	N/A	N/A	not_RB51
+neotomae	NCTC10070	GCF_900446115.1	N/A	N/A	N/A	N/A
+neotomae	NCTC10071	GCF_900446105.1	neotomae	N/A	N/A	not_RB51
+neotomae	NCTC10084	GCF_900446125.1	neotomae	N/A	N/A	not_RB51
+ovis	63-96	GCF_000370885.1	ovis	N/A	ovis	N/A
+ovis	80-125	GCF_000367065.1	ovis	N/A	ovis	N/A
+ovis	81-8	GCF_000370905.1	ovis	N/A	ovis	N/A
+ovis	ATCC-25840	GCF_000016845.1	ovis	N/A	ovis	N/A
+ovis	Bo873	GCF_050496165.1	ovis	N/A	N/A	N/A
+ovis	IntaBari-1993-758	GCF_000366005.1	ovis	N/A	ovis	N/A
+ovis	IntaBari-2001-319-40	GCF_000365965.1	ovis	N/A	ovis	N/A
+ovis	IntaBari-2002-82-58	GCF_000365925.1	ovis	N/A	ovis	N/A
+ovis	IntaBari-2009-88-4	GCF_000366045.1	ovis	N/A	ovis	N/A
+ovis	IntaBari-2010-47-268	GCF_000371345.1	ovis	N/A	ovis	N/A
+pinnipedialis	23a-1	GCF_015624465.1	pinnipedialis_ceti	N/A	N/A	not_RB51
+pinnipedialis	6-566	GCF_000740275.1	pinnipedialis_ceti	N/A	N/A	not_RB51
+pinnipedialis	B2-94	GCF_000157815.1	pinnipedialis_ceti	N/A	N/A	not_RB51
+pinnipedialis	B2-94	GCF_000221005.1	pinnipedialis_ceti	N/A	N/A	not_RB51
+pinnipedialis	M163-99-10	GCF_000157795.1	pinnipedialis_ceti	N/A	N/A	not_RB51
+pinnipedialis	M292-94-1	GCF_000158675.1	pinnipedialis_ceti	N/A	N/A	not_RB51
+pinnipedialis	NA	GCF_963693205.1	pinnipedialis_ceti	N/A	N/A	not_RB51
+pinnipedialis	NA	GCF_963693225.1	pinnipedialis_ceti	N/A	N/A	not_RB51
+suis	513UK	GCF_000740235.1	suis_bv2/suis_bv1_3_4	bv05	N/A	not_RB51
+suis	ATCC-23445	GCF_000018905.1	suis_bv2/suis_bv1_3_4	bv02	N/A	not_RB51
+suis	Bs143CITA	GCF_000699025.1	suis_bv2/suis_bv1_3_4	bv02	N/A	not_RB51
+suis	Bs364CITA-I	GCF_000698325.1	suis_bv2/suis_bv1_3_4	bv02	N/A	not_RB51
+suis	Bs396CITA	GCF_000698345.1	suis_bv2/suis_bv1_3_4	bv02	N/A	not_RB51
+suis	CVI_213	GCF_014884405.1	suis_bv2/suis_bv1_3_4	bv02	N/A	not_RB51
+suis	PT09143	GCF_000698245.1	suis_bv2/suis_bv1_3_4	bv02	N/A	not_RB51
+suis	PT09172	GCF_000698285.1	suis_bv2/suis_bv1_3_4	bv02	N/A	not_RB51
+suis	ZW043	GCF_000755105.1	N/A	bv01	N/A	not_RB51
+suis	ZW046	GCF_000755085.1	N/A	bv01	N/A	not_RB51
+suis	suis_bv1_1330	GCF_000007505.1	suis_bv2/suis_bv1_3_4	bv01	suis_bv1	not_RB51
+suis	suis_bv3_686	GCF_000740255.1	suis_bv2/suis_bv1_3_4	bv03	N/A	not_RB51
+suis	suis_bv4_CVI72	GCF_014884505.1	suis_bv2/suis_bv1_3_4	bv04	N/A	not_RB51
+suis	suis_bv5_CVI73	GCF_014884485.1	suis_bv2/suis_bv1_3_4	bv05	N/A	not_RB51

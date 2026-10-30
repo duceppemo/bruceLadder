@@ -1,4 +1,7 @@
-in_file = '/home/bioinfo/analyses/brucella_ladders/bruce_v2/consolidated_report/report_bruce.tsv'
+import sys
+
+# Path to the two column report_bruce.tsv written by bruce_ladder.py, as the first argument
+in_file = sys.argv[1] if len(sys.argv) > 1 else 'report_bruce.tsv'
 
 species_list = ['abort', 'suis', 'ovis', 'canis', 'ceti', 'pedialis', 'melitensis', 'neotomae']
 

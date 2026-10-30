@@ -11,7 +11,8 @@ the primer pair actually gives in real *Brucella* genomes.
 *B. suis*, *B. canis*, *B. ovis*, *B. ceti*, *B. pinnipedialis*, plus all available *B. neotomae*
 and *B. microti*, plus the reference and vaccine strains 16M, 2308, S19, RB51, 1330 and the
 *B. suis* biovar references. The full list is in
-[`validation-genomes.tsv`](validation-genomes.tsv).
+[`validation-genomes.tsv`](validation-genomes.tsv), which also records the call each genome
+received from each of the four assays, so every count in this file can be checked against it.
 
 "Observed" below is the product the pair gives in those genomes; `n` counts the genomes showing
 the main size. A locus only amplifies in the species it was designed to mark, so `n` is well

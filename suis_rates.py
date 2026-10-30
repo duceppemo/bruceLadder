@@ -1,4 +1,7 @@
-in_file = '/home/bioinfo/analyses/brucella_ladders/suis/consolidated_report/report_suis.tsv'
+import sys
+
+# Path to the two column report_suis.tsv written by bruce_ladder.py, as the first argument
+in_file = sys.argv[1] if len(sys.argv) > 1 else 'report_suis.tsv'
 
 biovar_list = ['bv01', 'bv02', 'bv03', 'bv04', 'bv05']
 

@@ -2,7 +2,7 @@
   <img src="docs/logo.svg" alt="" width="150">
 </p>
 
-<h1 align="center">bruceLadder</h1>
+<h1 align="center">brucetyper</h1>
 
 In silico **Bruce-ladder**, **Suis-ladder**, **AMOS PCR** and an **RB51 junction PCR** for
 *Brucella*, run end to end from assembled genomes.
@@ -185,9 +185,14 @@ validation of the assays against real *Brucella* sequence.
 ## Legacy scripts
 
 `suis_ladder.py`, `bruce_rates.py` and `suis_rates.py` are the original 2023 scripts, kept as they
-were. `suis_ladder.py` called genotypes from the consolidated report of a separate in silico PCR
+were except that the two `*_rates.py` scripts no longer hard-code an input path. `suis_ladder.py` called genotypes from the consolidated report of a separate in silico PCR
 tool, a step `bruce_ladder.py` now does itself. The two `*_rates.py` scripts score calls against
-species or biovar names embedded in file names and have their input paths hard-coded at the top.
+species or biovar names embedded in file names, and take the report to score as their first
+argument:
+
+```bash
+python bruce_rates.py results/report_bruce.tsv
+```
 
 ## License
 
