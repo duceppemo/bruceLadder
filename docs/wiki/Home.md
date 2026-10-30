@@ -18,6 +18,9 @@ genotype is called. No external PCR tool, no alignment step, no database.
 - **[Validation](https://github.com/duceppemo/brucetyper/wiki/Validation)** — every primer checked
   against its publication and every band size against 87 real genomes, including the primer sets
   that were checked and rejected
+- **[Large scale validation](https://github.com/duceppemo/brucetyper/wiki/Large-scale-validation)** — all 2051 GenBank assemblies under
+  taxid 234 through all four assays: concordance with the submitted labels, what the
+  disagreements actually are, and zero calls on the 333 *Ochrobactrum*-derived genomes
 - **[Development](https://github.com/duceppemo/brucetyper/wiki/Development)** — the test suite and
   the legacy 2023 scripts
 

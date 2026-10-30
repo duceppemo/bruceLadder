@@ -4,6 +4,7 @@
 - [Methods](https://github.com/duceppemo/brucetyper/wiki/Methods)
 - [The assays](https://github.com/duceppemo/brucetyper/wiki/Assays)
 - [Validation](https://github.com/duceppemo/brucetyper/wiki/Validation)
+- [Large scale validation](https://github.com/duceppemo/brucetyper/wiki/Large-scale-validation)
 - [Development](https://github.com/duceppemo/brucetyper/wiki/Development)
 
 ---
