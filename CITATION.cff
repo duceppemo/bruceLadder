@@ -29,6 +29,14 @@ references:
     year: 2006
     doi: "10.1373/clinchem.2005.062596"
   - type: article
+    title: "Evaluation of a multiplex PCR assay (Bruce-ladder) for molecular typing of all Brucella species, including the vaccine strains"
+    authors:
+      - family-names: López-Goñi
+        given-names: Ignacio
+    journal: "Journal of Clinical Microbiology"
+    year: 2008
+    doi: "10.1128/JCM.00837-08"
+  - type: article
     title: "New Bruce-ladder multiplex PCR assay for the biovar typing of Brucella suis and the discrimination of Brucella suis and Brucella canis"
     authors:
       - family-names: López-Goñi
@@ -44,6 +52,14 @@ references:
     journal: "Journal of Clinical Microbiology"
     year: 1994
     doi: "10.1128/jcm.32.11.2660-2666.1994"
+  - type: article
+    title: "Enhancement of the Brucella AMOS PCR assay for differentiation of Brucella abortus vaccine strains S19 and RB51"
+    authors:
+      - family-names: Bricker
+        given-names: Betsy J.
+    journal: "Journal of Clinical Microbiology"
+    year: 1995
+    doi: "10.1128/jcm.33.6.1640-1642.1995"
   - type: article
     title: "Identification of an IS711 element interrupting the wboA gene of Brucella abortus vaccine strain RB51 and a PCR assay to distinguish strain RB51 from other Brucella species and strains"
     authors:
