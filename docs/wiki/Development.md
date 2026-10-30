@@ -24,8 +24,13 @@ were apart from three fixes, all of them in the two `*_rates.py` scripts:
   could never fire at all
 
 `suis_ladder.py` called genotypes from the consolidated report of a separate in silico PCR tool, a
-step `bruce_ladder.py` now does itself. The two `*_rates.py` scripts score calls against species or
-biovar names embedded in file names, and take the report to score as their first argument:
+step `bruce_ladder.py` now does itself. It is also unfinished rather than merely superseded: its
+`write_output` is a stub that writes the literal string `test`, and `do_amos_pcr` writes one `-`
+row per profile that does not match instead of one row per sample. It is kept for the record, not
+to be run.
+
+The two `*_rates.py` scripts score calls against species or biovar names embedded in file names,
+and take the report to score as their first argument:
 
 ```bash
 python bruce_rates.py results/report_bruce.tsv
@@ -47,7 +52,7 @@ The headline number is held down by the legacy scripts, which have no tests:
 | `genotype.py` | 100% |
 | `insilico_pcr.py` | 99% |
 | `bruce_rates.py`, `suis_rates.py`, `suis_ladder.py` (legacy 2023) | 0% |
-| **Total** | **58%** |
+| **Total** | **59%** |
 
 The legacy scripts are deliberately left in the measurement rather than excluded. Omitting them
 would put the badge near 100% and overstate what is tested.

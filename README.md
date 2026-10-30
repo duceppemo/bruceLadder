@@ -45,8 +45,9 @@ Input is a FASTA file or a folder of them, gzipped or not, one sample per file. 
 reads. The sample name is the file name with its extension stripped. With no assay flag, all four
 are run.
 
-Three reports are written to `--outdir`: `amplicons.tsv` (every product found), `calls.tsv` (one
-row per sample and assay) and `report_<assay>.tsv` (sample and call, two columns).
+Three kinds of report are written to `--outdir`: `amplicons.tsv` (every product found),
+`calls.tsv` (one row per sample and assay) and one `report_<assay>.tsv` per assay run
+(sample and call, two columns).
 
 ```
 $ cat results/calls.tsv

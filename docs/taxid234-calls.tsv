@@ -1734,10 +1734,10 @@ GCA_000413515.1	Brucella ovis IntaBari-2009-88-3	IntaBari-2009-88-3	Contig	class
 GCA_000366045.1	Brucella ovis IntaBari-2009-88-4	IntaBari-2009-88-4	Contig	classical named	ovis	N/A	ovis	N/A
 GCA_000371345.1	Brucella ovis IntaBari-2010-47-268	IntaBari-2010-47-268	Scaffold	classical named	ovis	N/A	ovis	N/A
 GCA_000365905.1	Brucella ovis IntaBari-2010-47-871	IntaBari-2010-47-871	Contig	classical named	ovis	N/A	ovis	N/A
-GCA_006376675.1	Brucella pecoris	08RB2639	Contig	other/unclear	N/A	N/A	N/A	N/A
-GCA_012395285.1	Brucella pecoris	DSM 23868	Contig	other/unclear	N/A	N/A	N/A	N/A
-GCA_014197065.1	Brucella pecoris	DSM 23868	Scaffold	other/unclear	N/A	N/A	N/A	N/A
-GCA_040394535.1	Brucella pecoris		Contig	other/unclear	N/A	N/A	N/A	N/A
+GCA_006376675.1	Brucella pecoris	08RB2639	Contig	pecoris	N/A	N/A	N/A	N/A
+GCA_012395285.1	Brucella pecoris	DSM 23868	Contig	pecoris	N/A	N/A	N/A	N/A
+GCA_014197065.1	Brucella pecoris	DSM 23868	Scaffold	pecoris	N/A	N/A	N/A	N/A
+GCA_040394535.1	Brucella pecoris		Contig	pecoris	N/A	N/A	N/A	N/A
 GCA_000740275.1	Brucella pinnipedialis	6/566	Complete Genome	classical named	pinnipedialis_ceti	N/A	N/A	not_RB51
 GCA_015624465.1	Brucella pinnipedialis	23a-1	Complete Genome	classical named	pinnipedialis_ceti	N/A	N/A	not_RB51
 GCA_963693205.1	Brucella pinnipedialis		Contig	classical named	pinnipedialis_ceti	N/A	N/A	not_RB51
