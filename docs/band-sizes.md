@@ -86,6 +86,23 @@ strain, and no other call. Strain 2308 and the nine *abortus* field strains stil
 so the vaccine profiles do not shadow it. Note that 2308 is reported as `abortus` by this assay,
 unlike AMOS, which groups it with RB51.
 
+### The one unexplained N/A: LBAB009
+
+`abortus__LBAB009__GCF_030761395.1` is the only genome in the panel that calls `N/A` for a reason
+other than the assay's own limits. It gives 774, 590, 450 and 152 but no 1682 bp *wboA* band.
+
+It is not an assembly artefact: the genome is complete, two chromosomes, 3.29 Mb. Neither
+`BMEI0998_BMEI0997` primer has any match in it, because roughly 15 kb of chromosome 1 is missing,
+corresponding to 2308 `NC_007618.1` 953,840..968,920. That block carries `BAB_RS20745` and
+`BAB_RS20750`, the two glycosyltransferases of the O-antigen locus (*wboA*, *wboB*), so the strain
+is most likely a naturally rough isolate. Its sibling isolates LBAB008 and LBAB016 both carry the
+band, and AMOS calls LBAB009 `abortus_bv1_2_4` normally.
+
+`N/A` is the right answer here. The strain is *B. abortus* carrying a real deletion, and no profile
+was added for it: calling it `abortus` would hide the finding, and a profile fitted to one isolate
+would not generalise. It differs from RB51, where IS711 inserts into *wboA* and shifts the band to
+2526 bp rather than removing it.
+
 ## Suis-ladder
 
 Published sizes from López-Goñi *et al.* 2011.
