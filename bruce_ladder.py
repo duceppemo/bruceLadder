@@ -78,6 +78,19 @@ class BruceLadder(object):
         self.fasta_files = InSilicoPCR.file_list(path=self.input)
         if not self.fasta_files:
             raise FileNotFoundError('No FASTA files found in: {path}'.format(path=self.input))
+        # Amplicons and calls are both keyed on the sample name, so two files reducing to the same
+        # one would be pooled into a single genotype and reported as a single row
+        samples = dict()
+        for fasta_file in self.fasta_files:
+            sample = InSilicoPCR.strain_namer(fasta_file=fasta_file)
+            samples.setdefault(sample, list()).append(os.path.basename(fasta_file))
+        clashes = {sample: names for sample, names in samples.items() if len(names) > 1}
+        if clashes:
+            details = '\n'.join('  {sample}: {names}'.format(sample=sample,
+                                                             names=', '.join(sorted(names)))
+                                for sample, names in sorted(clashes.items()))
+            raise ValueError('Several input files give the same sample name:\n{details}'.format(
+                details=details))
         print('Found {n} FASTA file(s)'.format(n=len(self.fasta_files)), file=sys.stderr)
 
     def run_pcr(self):
