@@ -94,7 +94,9 @@ Repeated loci are collapsed before calling: a locus present several times in a g
 several products of the same size, which a gel shows as one band.
 
 All primers and expected band sizes live in `assays.py` and nowhere else. Edit that file to change
-how genotypes are called.
+how genotypes are called. Every primer has been checked against its publication and every band
+size against the product it gives in 87 real genomes: see
+[`docs/band-sizes.md`](docs/band-sizes.md).
 
 ## What the assays cannot resolve
 
