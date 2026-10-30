@@ -60,6 +60,14 @@ PRIMERS = {
 # Profiles are listed most specific first so that the RB51/2308 profile is named ahead of the
 # abortus profile it also satisfies, and S19, whose single band is a subset of both, is named
 # last. For the exact-matched assays the order only affects reporting.
+#
+# --tolerance is bounded above by the closest pair of sizes in an assay. Beyond half that gap the
+# windows of the two bands overlap and Genotyper.band_index assigns a size in the overlap to the
+# lower band; beyond the gap itself the two sizes merge into a single canonical band. The closest
+# pair is 120 bp for bruce, 102 for amos and 463 for rb51, but only 21 bp for suis, between the
+# 278 and 299 bp bands: at --tolerance 11 those two windows start to overlap and at 21 they
+# merge. Adding a profile size beside an existing one lowers that ceiling, so test_genotype.py
+# pins the closest pair of every assay.
 PROFILES = {
     'bruce': {
         'abortus': [1682, 774, 590, 450, 152],

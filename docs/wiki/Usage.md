@@ -35,6 +35,16 @@ sample name is the file name with those extensions stripped. Assemblies, not rea
 | `--min-size` | 50 | Smallest product reported, primers included |
 | `--max-size` | 3000 | Largest product reported, primers included |
 
+`--tolerance` has a ceiling, and it is well below the gap you might expect. It is bounded by the
+closest pair of band sizes in an assay: beyond half that gap the two windows overlap and a size in
+the overlap is assigned to the lower band, and beyond the gap itself the two bands merge. The
+closest pair is 120 bp for Bruce-ladder, 102 for AMOS and 463 for the RB51 junction assay, but
+only **21 bp for Suis-ladder**, between its 278 and 299 bp bands — so `--tolerance 11` already
+overlaps those two windows and 21 merges them. Raising it above 10 is not recommended; the
+measured cost of widening even a single band is on the
+[Large scale validation](https://github.com/duceppemo/brucetyper/wiki/Large-scale-validation#why-a-wider-tolerance-on-the-450-bp-band-was-rejected)
+page.
+
 ## Output
 
 Three kinds of report are written to `--outdir`:
