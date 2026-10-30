@@ -8,7 +8,7 @@ size tolerance of each other merged into a single band: the Bruce-ladder profile
 between suis biovar 2 and biovars 1, 3 and 4, which no gel and no size tolerance can separate.
 """
 
-import assays
+from . import assays
 
 __author__ = 'duceppemo'
 

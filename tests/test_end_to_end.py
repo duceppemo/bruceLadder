@@ -18,15 +18,20 @@ import unittest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from insilico_pcr import Amplicon
+from brucetyper import __version__
+from brucetyper.insilico_pcr import Amplicon
 from tests.synthetic import (build_genome, build_genome_for_loci, write_fasta,
                              write_profile_genomes)
-import assays
+from brucetyper import assays
 
 __author__ = 'duceppemo'
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SCRIPT = os.path.join(REPO, 'bruce_ladder.py')
+# The CLI is reached as a module rather than through the bruce_ladder.py shim, so that the suite
+# runs the same way from a clone, from an unpacked sdist and against an installed wheel. The shim
+# itself is covered by TestShim below.
+MODULE = 'brucetyper.cli'
+SHIM = os.path.join(REPO, 'bruce_ladder.py')
 
 # Genotypes a pattern cannot separate, reported as the matching profiles joined by '/'
 MERGED = {'suis_bv2': 'suis_bv1_3_4/suis_bv2',
@@ -41,8 +46,8 @@ def run_cli(indir, outdir, *flags):
     :param flags: Extra command line arguments
     :return: type subprocess.CompletedProcess
     """
-    command = [sys.executable, SCRIPT, '-i', indir, '-o', outdir] + list(flags)
-    return subprocess.run(command, capture_output=True, text=True, check=True)
+    command = [sys.executable, '-m', MODULE, '-i', indir, '-o', outdir] + list(flags)
+    return subprocess.run(command, capture_output=True, text=True, check=True, cwd=REPO)
 
 
 def read_calls(outdir):
@@ -312,6 +317,19 @@ class TestInputHandling(unittest.TestCase):
         with self.assertRaises(subprocess.CalledProcessError) as raised:
             run_cli(self.indir, self.outdir, '--suis')
         self.assertIn('same sample name', raised.exception.stderr)
+
+
+class TestShim(unittest.TestCase):
+    """
+    bruce_ladder.py is kept at the repository root so that the invocation documented in the README
+    and across the wiki keeps working. It is not part of the installed package.
+    """
+
+    @unittest.skipUnless(os.path.isfile(SHIM), 'no shim here, as in an unpacked sdist')
+    def test_the_shim_dispatches_to_the_package(self):
+        result = subprocess.run([sys.executable, SHIM, '--version'],
+                                capture_output=True, text=True, check=True, cwd=REPO)
+        self.assertIn(__version__, result.stdout)
 
 
 class TestRoughColumn(unittest.TestCase):
