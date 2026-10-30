@@ -141,7 +141,78 @@ by exactly that band.
 This matters beyond these 27: the 87 genome panel saw this locus vary only between 449 and 452 bp
 in non-marine strains, so **the locus is considerably more length-variable in *melitensis* than
 that panel suggested**. Four of the twelve shifted products sit within 25 bp of 450, close enough
-that a larger tolerance would recover them, at the cost of collisions elsewhere.
+that a larger tolerance would recover them. That was implemented and measured against this panel,
+and it does not work.
+
+#### Why a wider tolerance on the 450 bp band was rejected
+
+A per-band tolerance override was written and run over all 2051 genomes, widening only the 450/451
+band and leaving every other band of every assay at the default 5 bp. The in silico PCR does not
+depend on the tolerance, so the measurement re-reads the stored amplicon sizes: at the default it
+reproduces the published calls in
+[`docs/taxid234-calls.tsv`](https://github.com/duceppemo/brucetyper/blob/main/docs/taxid234-calls.tsv)
+exactly, for all 2051 genomes, which makes every difference below attributable to the widened band
+alone.
+
+| Window | Genomes recovered | Correct calls destroyed | Net |
+| --- | --- | --- | --- |
+| ±5 bp (default) | 0 | 0 | 0 |
+| ±10 bp | 1 | 0 | +1 |
+| ±15 bp | 2 | 0 | +2 |
+| ±20 bp | 3 | 0 | +3 |
+| **±24 bp** | **4** | **0** | **+4** |
+| **±25 bp** | **5** | **1** | **+4** |
+| ±30 bp | 6 | 1 | +5 |
+| ±40 bp | 6 | 2 | +4 |
+
+At ±24 bp the window recovers three of the 27 — the 426, 437 and 441 bp products — plus one
+unrelated genome, *B. abortus* bv. 2 `GCA_000157735.1`, whose 470 bp product had left it `N/A`.
+Nothing is lost.
+
+One more base pair is where it breaks. At ±25 bp the window reaches the fourth shifted product,
+the 476 bp one in *melitensis* `GCA_003514625.1`, and in the same step **destroys a correct call
+on `GCA_000590795.1`, *B. ceti* TE10759-12 — a complete genome, which gives a product of exactly
+476 bp at the same primer pair**. The two products are the same size, so no choice of window
+admits one and excludes the other.
+
+Both genomes were checked against five complete *melitensis* and five complete *ceti* and
+*pinnipedialis* references, by fastANI and independently by k-mer ANI. The two methods agree, and
+the controls separate by the same margin and in the expected direction:
+
+| Genome | Deposited as | mean ANI to *melitensis* | mean ANI to *ceti*/*pinnipedialis* | Gap |
+| --- | --- | --- | --- | --- |
+| `GCA_003514625.1` | *B. melitensis* | **99.886** | 99.670 | **+0.217** |
+| `GCA_000590795.1` | *B. ceti* TE10759-12 | 99.664 | **99.860** | **−0.196** |
+| `GCA_047324115.1` (control) | *B. ceti* | 99.625 | **99.885** | −0.260 |
+| `GCA_002191335.1` (control) | *B. melitensis* | **99.958** | 99.679 | +0.279 |
+
+So the recovery is genuine and so is the loss, and at ±25 bp they cancel: the same net as ±24 bp,
+bought by trading a correct call for an incorrect one on a complete genome. Widening further to
+±30 bp does show a better net, but it still destroys that *ceti* call, and its sixth recovery is a
+*B. canis* genome, `GCA_001078335.1`, that is a separate matter from the 27.
+
+#### The *ceti* allele at this locus is not confined to the large products
+
+The collision is not bad luck, and the reason it was not anticipated is worth recording. The
+`pinnipedialis_ceti` profile is built on the *absence* of a 450 bp band, on the understanding that
+`BMEI0535_BMEI0536` gives a much larger product in the marine mammal species. Across the panel
+that mostly holds, but not always:
+
+| Product in *ceti* / *pinnipedialis* | n | Genomes |
+| --- | --- | --- |
+| 1049–1675 bp | 13 | the expected range |
+| 762 bp | 1 | `GCA_050815205.1` |
+| **476 and 487 bp** | **2** | `GCA_000590795.1` and `GCA_000590815.1`, both **complete** |
+
+The two short ones are TE10759-12 and TE28753-12, a pair of complete *B. ceti* genomes, and they
+agree with each other. They put the *ceti* minimum at this locus at **476 bp, not 1049**, close
+enough to 450 that any window wide enough to rescue the shifted *melitensis* products reaches them
+too.
+
+The 450 bp band is therefore doing two jobs that cannot both be made more forgiving: separating
+*melitensis* from the marine mammal species, and absorbing *melitensis* length variation. The
+default 5 bp tolerance keeps the first one correct, which is the job the profile depends on, and
+the missed calls among the 27 are the price. **No per-band tolerance was adopted.**
 
 ## Reading the disagreements as a whole
 
