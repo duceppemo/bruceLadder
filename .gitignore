@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+
+# Test and analysis output
+.pytest_cache/
+results/
+
+# Virtual environments
+venv/
+.venv/
