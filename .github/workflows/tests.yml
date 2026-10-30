@@ -29,10 +29,15 @@ jobs:
           pip install biopython coverage
 
       - name: Run the test suite
-        run: coverage run --source=. --omit='tests/*' -m unittest discover -s tests -v
+        # sitecustomize plus COVERAGE_PROCESS_START makes coverage start inside the
+        # subprocesses the suite spawns; without it only the parent is measured.
+        run: |
+          echo 'import coverage; coverage.process_startup()' > sitecustomize.py
+          COVERAGE_PROCESS_START=.coveragerc PYTHONPATH=. coverage run -m unittest discover -s tests -v
 
       - name: Coverage report
         run: |
+          coverage combine
           coverage report -m
           coverage xml
 

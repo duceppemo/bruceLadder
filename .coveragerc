@@ -1,0 +1,17 @@
+# Most of the test suite drives the CLI through subprocess, and bruce_ladder.py
+# itself fans out over a multiprocessing pool. Without parallel mode plus
+# COVERAGE_PROCESS_START, none of that work is counted and the reported figure
+# is far below what the suite actually exercises.
+[run]
+source = .
+parallel = True
+concurrency = multiprocessing
+omit =
+    tests/*
+    sitecustomize.py
+    setup.py
+
+[report]
+exclude_lines =
+    pragma: no cover
+    if __name__ == .__main__.:
