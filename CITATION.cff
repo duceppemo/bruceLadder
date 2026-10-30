@@ -8,6 +8,7 @@ authors:
 version: 1.0.0
 date-released: 2026-10-30
 license: MIT
+doi: "10.5281/zenodo.23815138"
 repository-code: "https://github.com/duceppemo/brucetyper"
 url: "https://github.com/duceppemo/brucetyper"
 keywords:

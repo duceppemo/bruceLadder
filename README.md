@@ -10,6 +10,7 @@
   <img src="https://img.shields.io/badge/python-3.7%2B-blue" alt="Python 3.7+">
   <a href="LICENSE"><img src="https://img.shields.io/github/license/duceppemo/brucetyper" alt="License"></a>
   <a href="https://github.com/duceppemo/brucetyper/wiki"><img src="https://img.shields.io/badge/docs-wiki-informational" alt="Documentation"></a>
+  <a href="https://doi.org/10.5281/zenodo.23815138"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.23815138.svg" alt="DOI"></a>
 </p>
 
 In silico **Bruce-ladder**, **Suis-ladder**, **AMOS PCR** and an **RB51 junction PCR** for
@@ -76,6 +77,17 @@ maintained in [`docs/wiki`](docs/wiki):
 
 All primers and expected band sizes live in [`assays.py`](assays.py) and nowhere else. Edit that
 file to change how genotypes are called.
+
+## Citation
+
+If brucetyper is useful in your work, please cite it together with the assay publications listed
+on the [wiki](https://github.com/duceppemo/brucetyper/wiki/Assays#assay-sources):
+
+> Duceppe, M.-O. brucetyper: in silico Bruce-ladder, Suis-ladder, AMOS and RB51 junction PCR for
+> *Brucella*. https://doi.org/10.5281/zenodo.23815138
+
+The DOI above always resolves to the latest release; see
+[`CITATION.cff`](CITATION.cff).
 
 ## License
 
