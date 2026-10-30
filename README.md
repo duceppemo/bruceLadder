@@ -82,6 +82,13 @@ maintained in [`docs/wiki`](docs/wiki):
 All primers and expected band sizes live in [`assays.py`](assays.py) and nowhere else. Edit that
 file to change how genotypes are called.
 
+## Related
+
+- [insilicoPCR](https://github.com/duceppemo/insilicoPCR) — in silico PCR for assemblies and
+  reads, with **qPCR/probe assays**, degenerate primers and a virtual gel. Use it for probe based
+  assays, which brucetyper cannot represent: it reads amplicon sizes the way a gel is read, and a
+  hydrolysis probe has no size to read.
+
 ## Citation
 
 If brucetyper is useful in your work, please cite it together with the assay publications listed

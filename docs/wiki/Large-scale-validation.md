@@ -66,7 +66,7 @@ all.
 
 ### All ten are *B. melitensis*
 
-Three independent lines of evidence agree, so these are mislabelled submissions and not an assay
+Four independent lines of evidence agree, so these are mislabelled submissions and not an assay
 failure:
 
 1. **They carry the 1071 bp `BMEII0843_BMEII0844` band**, which the real 2308 reference
@@ -93,6 +93,22 @@ The separation is consistent at about 0.24 percentage points. The control runs t
 genuine 2308 reference sits at 99.84–99.98% against those same *abortus* genomes and only
 99.69–99.71% against the *melitensis* ones. *Brucella* species are so close that the window is
 narrow, but the grouping is unambiguous and bimodal, with no overlap.
+
+4. **A completely independent assay agrees.** The species-specific real-time PCR multiplex of
+   Hoover *et al.* 2026 targets unique core sequences and shares no primer with Bruce-ladder or
+   AMOS. Run in silico against `GCA_018604785.1`, it returns the *B. melitensis* target (`BM_10`,
+   147 bp, probe binding inside the product) and **not** the *B. abortus* target (`BA`, 75 bp),
+   which is the reverse of what the genuine 2308 reference gives.
+
+   | Genome | `Bru_genus` | `BA` | `BM_10` | `BS` |
+   | --- | --- | --- | --- | --- |
+   | *melitensis* 16M | 93 bp | — | **147 bp** | — |
+   | *suis* 1330 | 93 bp | — | — | **102 bp** |
+   | *abortus* 2308 (genuine) | 93 bp | **75 bp** | — | — |
+   | `GCA_018604785.1` (deposited as 2308) | 93 bp | — | **147 bp** | — |
+
+   Every target fired only in its own species, and a *Brucella* (*Ochrobactrum*) genome was
+   negative for all four, so the panel was behaving correctly on the controls.
 
 The genome deposited as *B. abortus* **2308** is the clearest case: it is *B. melitensis*, and
 anyone using it as the 2308 reference is using the wrong organism.
@@ -157,6 +173,13 @@ ground truth.
 # the accession list is the group column of the results table
 python bruce_ladder.py -i genomes/ -o results/
 ```
+
+The real-time PCR cross-check above is not part of brucetyper, which reads amplicon sizes the way
+a gel is read and cannot represent a hydrolysis probe. Probe assays are a first-class mode in
+[insilicoPCR](https://github.com/duceppemo/insilicoPCR); the primers and probes are published in
+Hoover E, Chmara J, Duceppe M-O, *et al.* Two novel real-time PCR assays for *Brucella* detection.
+*Microbiol Spectr*. 2026;14:e0297425.
+[PMID 41885434](https://pubmed.ncbi.nlm.nih.gov/41885434/).
 
 Per genome calls for all 2051 assemblies are in
 [`docs/taxid234-calls.tsv`](https://github.com/duceppemo/brucetyper/blob/main/docs/taxid234-calls.tsv):
