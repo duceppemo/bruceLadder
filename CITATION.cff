@@ -1,0 +1,53 @@
+cff-version: 1.2.0
+message: "If you use brucetyper, please cite it as below, together with the assay publications (see the wiki)."
+type: software
+title: "brucetyper: in silico Bruce-ladder, Suis-ladder, AMOS and RB51 junction PCR for Brucella"
+authors:
+  - family-names: Duceppe
+    given-names: Marc-Olivier
+version: 1.0.0
+date-released: 2026-10-30
+license: MIT
+repository-code: "https://github.com/duceppemo/brucetyper"
+url: "https://github.com/duceppemo/brucetyper"
+keywords:
+  - bioinformatics
+  - brucella
+  - in silico PCR
+  - genotyping
+  - Bruce-ladder
+  - AMOS PCR
+  - RB51
+references:
+  - type: article
+    title: "Multiplex PCR assay for the identification and differentiation of all Brucella species and the vaccine strains Brucella abortus S19 and RB51 and Brucella melitensis Rev1"
+    authors:
+      - family-names: García-Yoldi
+        given-names: David
+    journal: "Clinical Chemistry"
+    year: 2006
+    doi: "10.1373/clinchem.2005.062596"
+  - type: article
+    title: "New Bruce-ladder multiplex PCR assay for the biovar typing of Brucella suis and the discrimination of Brucella suis and Brucella canis"
+    authors:
+      - family-names: López-Goñi
+        given-names: Ignacio
+    journal: "Veterinary Microbiology"
+    year: 2011
+    doi: "10.1016/j.vetmic.2011.06.035"
+  - type: article
+    title: "Differentiation of Brucella abortus bv. 1, 2, and 4, Brucella melitensis, Brucella ovis, and Brucella suis bv. 1 by PCR"
+    authors:
+      - family-names: Bricker
+        given-names: Betsy J.
+    journal: "Journal of Clinical Microbiology"
+    year: 1994
+    doi: "10.1128/jcm.32.11.2660-2666.1994"
+  - type: article
+    title: "Identification of an IS711 element interrupting the wboA gene of Brucella abortus vaccine strain RB51 and a PCR assay to distinguish strain RB51 from other Brucella species and strains"
+    authors:
+      - family-names: Vemulapalli
+        given-names: Ramesh
+    journal: "Clinical and Diagnostic Laboratory Immunology"
+    year: 1999
+    doi: "10.1128/CDLI.6.5.760-764.1999"
