@@ -117,10 +117,45 @@ So **10 of the 60 disagreements are confirmed errors in the submitted labels, no
 assay**. Scoring those as assay failures understates it: of the 1553 classically named genomes
 that produced a call, the assay is demonstrably right in at least 1503.
 
-This is the honest reading throughout: a disagreement can mean a mislabelled submission **or** an
-assay limit, and the band level evidence is what separates them. Neither should be assumed — the
-27 *melitensis* → `pinnipedialis_ceti` cases above have **not** been checked this way, and a
-missing band is the likelier explanation there.
+### The 27 *melitensis* → `pinnipedialis_ceti` cases are the opposite: the assay is wrong
+
+Checked the same way, every one of the 27 is genuinely *B. melitensis*: **99.80–99.97%** ANI to
+complete *melitensis* genomes against **99.55–99.65%** to complete *ceti* and *pinnipedialis*
+genomes, a consistent gap of about 0.3 points with no exceptions. Several are well known
+*melitensis* strains, 16M, M5, M111 and 63/9 among them.
+
+So the labels are right and the **call is wrong**. These are assay failures, not mislabelled
+submissions, and the cause is always the missing 450 bp `BMEI0535_BMEI0536` band:
+
+| Cause | n |
+| --- | --- |
+| Both primer sites present but on different contigs — assembly break | 14 |
+| Product present but **shifted** off 450 bp | 12 |
+| Only one primer site survives | 1 |
+
+The shifted products measure 341, 356, 426, 437, 441, 476, 612, 612, 627, 627, 781 and 781 bp.
+The default `--tolerance` is 5 bp, so none of them register as the 450 bp band, and losing that
+one band moves the pattern onto the `pinnipedialis_ceti` profile, which differs from *melitensis*
+by exactly that band.
+
+This matters beyond these 27: the 87 genome panel saw this locus vary only between 449 and 452 bp
+in non-marine strains, so **the locus is considerably more length-variable in *melitensis* than
+that panel suggested**. Four of the twelve shifted products sit within 25 bp of 450, close enough
+that a larger tolerance would recover them, at the cost of collisions elsewhere.
+
+## Reading the disagreements as a whole
+
+Of the 60 disagreements, 37 have now been checked against ANI:
+
+| | n | Who is wrong |
+| --- | --- | --- |
+| *abortus* labelled, called `melitensis` | 10 | **The label.** All ten are *B. melitensis* |
+| *melitensis* labelled, called `pinnipedialis_ceti` | 27 | **The assay.** All 27 are *B. melitensis*, each missing the 450 bp band |
+| Remaining | 23 | Not yet checked |
+
+A disagreement can mean a mislabelled submission **or** an assay limit, and only the sequence
+evidence separates them. Here it fell both ways, in roughly equal measure, which is why neither
+should be assumed.
 
 ## `N/A` is not an assembly quality gradient
 
