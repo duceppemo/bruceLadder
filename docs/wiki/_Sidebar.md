@@ -1,5 +1,6 @@
 **[brucetyper](https://github.com/duceppemo/brucetyper/wiki)**
 
+- [Installation](https://github.com/duceppemo/brucetyper/wiki/Installation)
 - [Usage](https://github.com/duceppemo/brucetyper/wiki/Usage)
 - [Methods](https://github.com/duceppemo/brucetyper/wiki/Methods)
 - [The assays](https://github.com/duceppemo/brucetyper/wiki/Assays)

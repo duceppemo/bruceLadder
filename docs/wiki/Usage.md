@@ -1,23 +1,15 @@
 # Usage
 
-## Requirements
-
-- Python 3.7+ (profile order matters, so insertion-ordered dicts are required). CI covers 3.9
-  through 3.13; 3.7 and 3.8 are past end of life and are not exercised.
-- [Biopython](https://biopython.org/)
-
-```bash
-pip install biopython
-```
-
-## Usage
+See [Installation](https://github.com/duceppemo/brucetyper/wiki/Installation) for `pip install brucetyper` and the alternatives. Examples
+below use the installed `brucetyper` command; from a clone, `python bruce_ladder.py` takes exactly
+the same arguments.
 
 ```bash
 # Every assay, on a folder of assemblies
-python bruce_ladder.py -i genomes/ -o results/
+brucetyper -i genomes/ -o results/
 
 # One assay, on a single genome
-python bruce_ladder.py -i GCF_000054005.1.fna.gz -o results/ --amos
+brucetyper -i GCF_000054005.1.fna.gz -o results/ --amos
 ```
 
 Input is a FASTA file or a folder of them, gzipped or not, one sample per file. Recognised
@@ -57,7 +49,7 @@ Three kinds of report are written to `--outdir`:
   `bruce_rates.py` and `suis_rates.py` expect.
 
 ```
-$ python bruce_ladder.py -i genomes/ -o results/ --amos
+$ brucetyper -i genomes/ -o results/ --amos
 Found 6 FASTA file(s)
 Running in silico PCR for assay(s): amos
   RB51_or_2308: 3 amplicon(s)

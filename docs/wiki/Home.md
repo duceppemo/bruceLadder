@@ -9,8 +9,9 @@ genotype is called. No external PCR tool, no alignment step, no database.
 
 ## Pages
 
-- **[Usage](https://github.com/duceppemo/brucetyper/wiki/Usage)** — requirements, inputs, every
-  command line option, and the three reports that come out
+- **[Installation](https://github.com/duceppemo/brucetyper/wiki/Installation)** — pip, pipx, from a clone, and what gets installed
+- **[Usage](https://github.com/duceppemo/brucetyper/wiki/Usage)** — inputs, every command line option, and the three reports that
+  come out
 - **[Methods](https://github.com/duceppemo/brucetyper/wiki/Methods)** — how observed sizes become
   canonical bands, how a profile is matched, and how the rough flag is read
 - **[The assays](https://github.com/duceppemo/brucetyper/wiki/Assays)** — what each assay resolves,

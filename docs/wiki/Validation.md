@@ -1,6 +1,8 @@
 # Primer and band size validation
 
-Every primer in [`assays.py`](https://github.com/duceppemo/brucetyper/blob/main/assays.py) was checked against the sequence printed in the
+Every primer in
+[`brucetyper/assays.py`](https://github.com/duceppemo/brucetyper/blob/main/brucetyper/assays.py)
+was checked against the sequence printed in the
 publication that describes its assay, and every expected band size was checked against the product
 the primer pair actually gives in real *Brucella* genomes.
 
