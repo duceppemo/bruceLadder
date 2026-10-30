@@ -1,6 +1,8 @@
-<img src="docs/logo.svg" alt="" width="128" align="right">
+<p align="center">
+  <img src="docs/logo.svg" alt="" width="150">
+</p>
 
-# bruceLadder
+<h1 align="center">bruceLadder</h1>
 
 In silico **Bruce-ladder**, **Suis-ladder** and **AMOS PCR** for *Brucella*, run end to end from
 assembled genomes.
@@ -8,8 +10,6 @@ assembled genomes.
 For every FASTA file the primer pairs of each requested assay are located directly in the
 nucleotide sequence, the resulting amplicon sizes are read the way a gel would be read, and a
 genotype is called. No external PCR tool, no alignment step, no database.
-
-<br clear="right">
 
 ## Requirements
 
