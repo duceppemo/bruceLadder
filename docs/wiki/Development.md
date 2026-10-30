@@ -13,10 +13,19 @@ validation of the assays against real *Brucella* sequence.
 ## Legacy scripts
 
 `suis_ladder.py`, `bruce_rates.py` and `suis_rates.py` are the original 2023 scripts, kept as they
-were except that the two `*_rates.py` scripts no longer hard-code an input path. `suis_ladder.py` called genotypes from the consolidated report of a separate in silico PCR
-tool, a step `bruce_ladder.py` now does itself. The two `*_rates.py` scripts score calls against
-species or biovar names embedded in file names, and take the report to score as their first
-argument:
+were apart from three fixes, all of them in the two `*_rates.py` scripts:
+
+- they no longer hard-code an input path
+- `bruce_rates.py` no longer divides by zero on a species that is absent from the report, which
+  killed it on its first iteration for any report without an *abortus* genome
+- its `wrongPreID` and `notID` counters now match the call against the species list by substring
+  rather than by equality, which is what that list holds: `'abort'` has to be found inside
+  `abortus`. `wrongPreID` compared the species to the list it had just been removed from, so it
+  could never fire at all
+
+`suis_ladder.py` called genotypes from the consolidated report of a separate in silico PCR tool, a
+step `bruce_ladder.py` now does itself. The two `*_rates.py` scripts score calls against species or
+biovar names embedded in file names, and take the report to score as their first argument:
 
 ```bash
 python bruce_rates.py results/report_bruce.tsv
