@@ -118,10 +118,15 @@ class InSilicoPCR(object):
         :return: type LIST: (start position, number of mismatches) tuples, 0-based, sorted
         """
         length = len(primer)
+        # A primer shorter than the anchor is matched in full. Without the clamp, length - anchor
+        # goes negative and the slice wraps, silently anchoring fewer bases than were asked for:
+        # at three_prime 25 a 20 bp primer would anchor its last 5 bases only, making the search
+        # looser than at three_prime 20 rather than stricter.
+        anchor = min(self.three_prime, length)
         if anchor_three_prime:
-            exact = slice(length - self.three_prime, length)
+            exact = slice(length - anchor, length)
         else:
-            exact = slice(0, self.three_prime)
+            exact = slice(0, anchor)
         exact_seq = primer[exact]
         # Seed on exact block matches to avoid scanning every position of the sequence
         candidates = set()
