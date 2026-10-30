@@ -12,7 +12,9 @@ the primer pair actually gives in real *Brucella* genomes.
 and *B. microti*, plus the reference and vaccine strains 16M, 2308, S19, RB51, 1330 and the
 *B. suis* biovar references. The full list is in
 [`validation-genomes.tsv`](https://github.com/duceppemo/brucetyper/blob/main/docs/validation-genomes.tsv), which also records the call each genome
-received from each of the four assays, so every count in this file can be checked against it.
+received from each of the four assays, so every call count on this page can be checked against
+it. The rough flag is not one of its columns, so the counts under
+[The rough flag on the panel](#the-rough-flag-on-the-panel) are the one exception.
 
 "Observed" below is the product the pair gives in those genomes; `n` counts the genomes showing
 the main size. A locus only amplifies in the species it was designed to mark, so `n` is well
@@ -87,10 +89,40 @@ after this validation:
 | `S19` | 1682, 774, 450, 152 | the 590 bp BMEII0428 band is absent | GCF_000018725.1, GCF_038420195.1 |
 
 Adding them changed three calls in the 87 genome panel, all from `N/A` to the right vaccine
-strain, and no other call. Strain 2308 and eight of the nine *abortus* field strains still call `abortus`, the ninth being
-LBAB009, which calls `N/A` for the unrelated reason given below,
-so the vaccine profiles do not shadow it. Note that 2308 is reported as `abortus` by this assay,
-unlike AMOS, which groups it with RB51.
+strain, and no other call. Strain 2308 and eight of the nine *abortus* field strains still call
+`abortus`, the ninth being LBAB009, which calls `N/A` for the unrelated reason given under
+[The seven N/A](#the-seven-na), so the vaccine profiles do not shadow it. Note that 2308 is
+reported as `abortus` by this assay, unlike AMOS, which groups it with RB51.
+
+### Concordance with the labels
+
+Every call the panel produced, against the species each genome is labelled with:
+
+| Labelled | n | Called |
+| --- | --- | --- |
+| *abortus* | 13 | `abortus` 9, `S19` 2, `RB51` 1, `N/A` 1 |
+| *melitensis* | 11 | `melitensis` 9, `suis_bv2/suis_bv1_3_4` 1, `canis` 1 |
+| *suis* | 14 | `suis_bv2/suis_bv1_3_4` 12, `N/A` 2 |
+| *canis* | 10 | `canis` 8, `N/A` 2 |
+| *ovis* | 10 | `ovis` 10 |
+| *ceti* | 10 | `pinnipedialis_ceti` 10 |
+| *pinnipedialis* | 8 | `pinnipedialis_ceti` 8 |
+| *neotomae* | 6 | `neotomae` 4, `N/A` 2 |
+| *microti* | 5 | `suis_bv2/suis_bv1_3_4` 5 |
+
+So **78 of the 87 agree with the label**, counting the three vaccine strains as *abortus* and the
+two merges the assay cannot resolve, *microti* with *suis* bv 2 and *ceti* with *pinnipedialis*,
+as agreement. **Two contradict the label**, and both are right to. **Seven are `N/A`**.
+
+### Two of the eleven *melitensis* are mislabelled submissions
+
+`melitensis__GTC-3P1517__GCF_055388155.1` calls `suis_bv2/suis_bv1_3_4` and
+`melitensis__GTC-3P1521__GCF_055389085.1` calls `canis`. Neither is an assay error. Both are in
+the independently reported set on the
+[Large scale validation](https://github.com/duceppemo/brucetyper/wiki/Large-scale-validation#independent-corroboration) page, where MLST-9, the Hoover *et al.*
+2026 real-time PCR and Mash distances place them exactly where Bruce-ladder does. The labels are
+wrong and the calls are right, so the panel's two disagreements are both submissions rather than
+assay failures.
 
 ### The rough flag on the panel
 
@@ -113,10 +145,26 @@ And the one it misses:
 `no` therefore does not mean smooth. It means this one band is where it should be. Of the two
 naturally rough species, the flag catches *B. ovis* and misses *B. canis*.
 
-### The one unexplained N/A: LBAB009
+### The seven N/A
 
-`abortus__LBAB009__GCF_030761395.1` is the only genome in the panel that calls `N/A` for a reason
-other than the assay's own limits. It gives 774, 590, 450 and 152 but no 1682 bp *wboA* band.
+| Genome | Level | Why it matches no profile |
+| --- | --- | --- |
+| *abortus* LBAB009 | Complete | ~15 kb deletion removing the O-antigen locus, so no 1682 bp band. In detail below |
+| *canis* 2010009751, SVA13 | Complete | The `BMEII0843_BMEII0844` products the locus table above records at 1077 and 1094 bp instead of 1071. Both sit outside the 5 bp window, and the `canis` profile needs that band |
+| *neotomae* NCTC10070 | Contig | 49 contig draft, 2.94 Mb, ~370 kb short of a full genome. The locus is not in the assembly |
+| *neotomae* 5K33 | Scaffold | Not traced |
+| *suis* ZW043, ZW046 | Complete | Not traced. Suis-ladder calls both `bv01` |
+
+Five of the seven are complete genomes, so fragmentation is not the general explanation, and
+**three are not traced to a cause**. Of the four that are, only LBAB009 is a property of the
+strain. The two *canis* are a `--tolerance` artefact — a real product 6 and 23 bp off a canonical
+band — and NCTC10070 is an assembly gap. The same tolerance trade-off is measured over 2051
+genomes on the [Large scale validation](https://github.com/duceppemo/brucetyper/wiki/Large-scale-validation#why-a-wider-tolerance-on-the-450-bp-band-was-rejected)
+page, where widening the window is shown to cost more than it recovers.
+
+#### LBAB009 in detail
+
+`abortus__LBAB009__GCF_030761395.1` gives 774, 590, 450 and 152 but no 1682 bp *wboA* band.
 
 It is not an assembly artefact: the genome is complete, two chromosomes, 3.29 Mb. Neither
 `BMEI0998_BMEI0997` primer has any match in it, because roughly 15 kb of chromosome 1 is missing,
