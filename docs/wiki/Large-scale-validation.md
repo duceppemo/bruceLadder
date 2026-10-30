@@ -145,17 +145,70 @@ that a larger tolerance would recover them, at the cost of collisions elsewhere.
 
 ## Reading the disagreements as a whole
 
-Of the 60 disagreements, 37 have now been checked against ANI:
+All 60 disagreements have been checked against ANI:
 
-| | n | Who is wrong |
-| --- | --- | --- |
-| *abortus* labelled, called `melitensis` | 10 | **The label.** All ten are *B. melitensis* |
-| *melitensis* labelled, called `pinnipedialis_ceti` | 27 | **The assay.** All 27 are *B. melitensis*, each missing the 450 bp band |
-| Remaining | 23 | Not yet checked |
+| | n |
+| --- | --- |
+| **The assay is wrong** — the label is right, a band was lost or shifted | 41 |
+| **The label is wrong** — the submitted name is not supported by the sequence | 19 |
 
-A disagreement can mean a mislabelled submission **or** an assay limit, and only the sequence
-evidence separates them. Here it fell both ways, in roughly equal measure, which is why neither
-should be assumed.
+So of the 1553 classically named genomes that produced a call, the call matches the organism in
+**1512, or 97.4%**: the 1493 that agree with the label outright, plus 19 where the assay
+contradicted the label and was right to.
+
+A disagreement can mean a mislabelled submission **or** an assay limit, and only sequence evidence
+separates the two. Here it fell both ways, which is why neither should be assumed.
+
+### Independent corroboration
+
+Thirteen *Brucella* assemblies were independently reported as misnamed on the basis of MLST-9
+(PubMLST *brucella* scheme), the species-specific real-time PCR of Hoover *et al.* 2026 scored in
+silico, and Mash distances over a dereplicated reference set — none of which shares a method or a
+primer with Bruce-ladder.
+
+**Bruce-ladder had independently flagged 12 of the 13 from band patterns alone**, and the
+thirteenth is not a contradiction:
+
+| Accession | Deposited as | Bruce-ladder | Reported as |
+| --- | --- | --- | --- |
+| `GCA_041861985.1` | *B. abortus* | `melitensis` | *B. melitensis* |
+| `GCA_016091955.1` | *B. abortus* | `melitensis` | *B. melitensis* |
+| `GCA_016091965.1` | *B. abortus* | `melitensis` | *B. melitensis* |
+| `GCA_018604785.1` | *B. abortus* (strain 2308) | `melitensis` | *B. melitensis* |
+| `GCA_000250775.2` | *B. melitensis* S66 | `suis_bv2/suis_bv1_3_4` | *B. suis* |
+| `GCA_000250835.2` | *B. melitensis* 16M13W | `abortus` | *B. abortus* |
+| `GCA_000292125.1` | *B. suis* S2-30 | `melitensis` | *B. melitensis* |
+| `GCA_055389085.1` | *B. melitensis* | `canis` | *B. canis* |
+| `GCA_009823695.1` | *B. melitensis* | `suis_bv2/suis_bv1_3_4` | *B. suis* |
+| `GCA_000292045.1` | *B. abortus* 104M | `suis_bv2/suis_bv1_3_4` | *B. suis* |
+| `GCA_055388155.1` | *B. melitensis* | `suis_bv2/suis_bv1_3_4` | *B. suis* |
+| `GCA_055389475.1` | *B. melitensis* | `abortus` | *B. abortus* |
+| `GCA_000662015.2` | *B. inopinata* BO1 | `N/A` | classical, suis-canis group |
+
+The last one is the assay declining rather than disagreeing: it produces no Bruce-ladder pattern
+at all, which is the correct behaviour for a genome it cannot place.
+
+### Where ANI is not enough
+
+The species assignments above come from MLST and the real-time PCR assay, not from the ANI used
+elsewhere on this page, because **ANI cannot separate *B. suis* from *B. canis*** at the distances
+involved. Measured against three references per species:
+
+| Assembly | ANI to *canis* | ANI to *suis* | Gap |
+| --- | --- | --- | --- |
+| `GCA_000292045.1` | 99.894 | 99.891 | **0.003** |
+| `GCA_000250775.2` | 99.891 | 99.884 | **0.007** |
+| `GCA_009823695.1` | 99.925 | 99.872 | 0.053 |
+
+For comparison, the *melitensis* against *abortus* separation elsewhere on this page is about
+0.25 points, and a known *B. canis* reference sits 0.118 above *suis*. A gap of 0.003 carries no
+information. *B. canis* is a lineage within the *B. suis* group, so *suis* is the more general and
+better supported reading for all three, and the nine-locus MLST profiles place them with deposited
+*B. suis* outright.
+
+The same limit applies to *suis* against *microti*: a known *B. suis* reference sits only 0.011
+above *microti*. That is the same indistinguishability Bruce-ladder itself reports by calling
+`suis_bv2/suis_bv1_3_4` rather than naming one.
 
 ## `N/A` is not an assembly quality gradient
 

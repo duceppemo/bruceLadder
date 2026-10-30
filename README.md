@@ -73,9 +73,9 @@ maintained in [`docs/wiki`](docs/wiki):
   against its publication and every band size against 87 real genomes, including the primer sets
   that were checked and **rejected**
 - [Large scale validation](https://github.com/duceppemo/brucetyper/wiki/Large-scale-validation) —
-  all **2051** GenBank assemblies under taxid 234: 96.1% concordance with the submitted species
-  label among genomes that produced a call, and **zero** calls on the 333 *Ochrobactrum*-derived
-  genomes
+  all **2051** GenBank assemblies under taxid 234. Of the genomes that produced a call the assay
+  matches the organism in **97.4%**, including 19 where it contradicted the submitted label and
+  was right to; **zero** calls on the 333 *Ochrobactrum*-derived genomes
 - [Development](https://github.com/duceppemo/brucetyper/wiki/Development) — the test suite and the
   legacy 2023 scripts
 
