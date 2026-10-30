@@ -189,6 +189,11 @@ were. `suis_ladder.py` called genotypes from the consolidated report of a separa
 tool, a step `bruce_ladder.py` now does itself. The two `*_rates.py` scripts score calls against
 species or biovar names embedded in file names and have their input paths hard-coded at the top.
 
+## License
+
+MIT, see [`LICENSE`](LICENSE). Copyright held by His Majesty the King in Right of Canada, as
+represented by the Canadian Food Inspection Agency.
+
 ## Assay sources
 
 **Bruce-ladder**
