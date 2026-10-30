@@ -1,6 +1,6 @@
 # Primer and band size validation
 
-Every primer in [`assays.py`](../assays.py) was checked against the sequence printed in the
+Every primer in [`assays.py`](https://github.com/duceppemo/brucetyper/blob/main/assays.py) was checked against the sequence printed in the
 publication that describes its assay, and every expected band size was checked against the product
 the primer pair actually gives in real *Brucella* genomes.
 
@@ -11,7 +11,7 @@ the primer pair actually gives in real *Brucella* genomes.
 *B. suis*, *B. canis*, *B. ovis*, *B. ceti*, *B. pinnipedialis*, plus all available *B. neotomae*
 and *B. microti*, plus the reference and vaccine strains 16M, 2308, S19, RB51, 1330 and the
 *B. suis* biovar references. The full list is in
-[`validation-genomes.tsv`](validation-genomes.tsv), which also records the call each genome
+[`validation-genomes.tsv`](https://github.com/duceppemo/brucetyper/blob/main/docs/validation-genomes.tsv), which also records the call each genome
 received from each of the four assays, so every count in this file can be checked against it.
 
 "Observed" below is the product the pair gives in those genomes; `n` counts the genomes showing
