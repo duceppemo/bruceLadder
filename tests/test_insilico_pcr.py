@@ -181,6 +181,21 @@ class TestAmplifyContig(unittest.TestCase):
         seq = product_contig(self.rng, FORWARD, REVERSE, 590, flank=100)
         self.assertEqual(pcr.amplify_contig(seq=seq, forward=FORWARD, reverse=REVERSE), [])
 
+    def test_a_reverse_site_inside_the_forward_primer_is_skipped(self):
+        # A pair whose reverse primer is the reverse complement of its forward primer looks for
+        # the same sequence at both ends, so every site is both a left site and a right site. The
+        # site a primer sits on overlaps itself, which is not a product, and the next one along is
+        # taken instead. This is the guard that keeps a primer from amplifying across itself.
+        reverse = InSilicoPCR.reverse_complement(FORWARD)
+        seq = (spacer(self.rng, 100) + FORWARD + spacer(self.rng, 30) + FORWARD +
+               spacer(self.rng, 100))
+        products = self.pcr.amplify_contig(seq=seq, forward=FORWARD, reverse=reverse)
+        self.assertEqual(len(products), 1)
+        strand, start, end, f_mismatches, r_mismatches = products[0]
+        # The first site pairs with the second, 70 bp apart, not with itself
+        self.assertEqual((strand, start, end), ('+', 100, 170))
+        self.assertEqual((f_mismatches, r_mismatches), (0, 0))
+
     def test_primers_without_a_site_yield_nothing(self):
         self.assertEqual(self.amplify(spacer(self.rng, 2000)), [])
 
