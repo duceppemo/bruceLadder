@@ -21,3 +21,24 @@ argument:
 ```bash
 python bruce_rates.py results/report_bruce.tsv
 ```
+
+## Coverage
+
+Coverage is measured in CI and reported to Codecov. The suite drives the CLI through
+`subprocess`, and `bruce_ladder.py` fans out over a multiprocessing pool, so `.coveragerc` turns
+on `parallel` mode and the workflow sets `COVERAGE_PROCESS_START`; without that only the parent
+process is measured and the figure reads about 35% instead of the real one.
+
+The headline number is held down by the legacy scripts, which have no tests:
+
+| Module | Coverage |
+| --- | --- |
+| `assays.py` | 100% |
+| `bruce_ladder.py` | 100% |
+| `genotype.py` | 100% |
+| `insilico_pcr.py` | 99% |
+| `bruce_rates.py`, `suis_rates.py`, `suis_ladder.py` (legacy 2023) | 0% |
+| **Total** | **58%** |
+
+The legacy scripts are deliberately left in the measurement rather than excluded. Omitting them
+would put the badge near 100% and overstate what is tested.
