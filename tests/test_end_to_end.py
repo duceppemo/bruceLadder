@@ -19,7 +19,8 @@ import unittest
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from insilico_pcr import Amplicon
-from tests.synthetic import build_genome, write_fasta, write_profile_genomes
+from tests.synthetic import (build_genome, build_genome_for_loci, write_fasta,
+                             write_profile_genomes)
 import assays
 
 __author__ = 'duceppemo'
@@ -216,6 +217,57 @@ class TestInputHandling(unittest.TestCase):
         with self.assertRaises(subprocess.CalledProcessError) as raised:
             run_cli(self.indir, self.outdir, '--suis')
         self.assertIn('No FASTA files found', raised.exception.stderr)
+
+
+
+
+class TestRoughColumn(unittest.TestCase):
+    """
+    The rough column of calls.tsv, driven through the CLI
+    """
+
+    # Everything an abortus genome shows apart from the O-antigen band itself
+    BACKGROUND = {'BMEI1426_BMEI1427': 774,
+                  'BMEII0428_BMEII0428': 590,
+                  'BMEI0535_BMEI0536': 450,
+                  'BMEII0987': 152}
+
+    def setUp(self):
+        self.tmpdir = tempfile.mkdtemp()
+        indir = os.path.join(self.tmpdir, 'genomes')
+        outdir = os.path.join(self.tmpdir, 'results')
+        os.makedirs(indir)
+        for name, wboa in [('smooth', 1682), ('shifted', 2526), ('absent', None)]:
+            loci = dict(self.BACKGROUND)
+            if wboa is not None:
+                loci['BMEI0998_BMEI0997'] = wboa
+            write_fasta(build_genome_for_loci(assay='bruce', locus_sizes=loci),
+                        os.path.join(indir, '{name}.fasta'.format(name=name)))
+        run_cli(indir, outdir, '--bruce', '-t', '1')
+        self.calls = read_calls(outdir)
+
+    def tearDown(self):
+        shutil.rmtree(self.tmpdir)
+
+    def test_the_intact_band_is_not_rough(self):
+        self.assertEqual(self.calls[('smooth', 'bruce')]['rough'], 'no')
+
+    def test_a_shifted_band_is_rough(self):
+        self.assertEqual(self.calls[('shifted', 'bruce')]['rough'], 'yes')
+
+    def test_a_missing_band_is_rough(self):
+        self.assertEqual(self.calls[('absent', 'bruce')]['rough'], 'yes')
+
+    def test_the_smooth_genome_still_calls_abortus(self):
+        # The flag is reported beside the call, it does not change it
+        self.assertEqual(self.calls[('smooth', 'bruce')]['call'], 'abortus')
+
+    def test_the_shifted_genome_still_calls_rb51(self):
+        self.assertEqual(self.calls[('shifted', 'bruce')]['call'], 'RB51')
+
+    def test_the_column_is_present_for_every_row(self):
+        for row in self.calls.values():
+            self.assertIn('rough', row)
 
 
 if __name__ == '__main__':

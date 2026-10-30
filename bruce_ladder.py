@@ -9,7 +9,7 @@ resulting amplicon sizes are read as a gel would be read, and a genotype is call
 
 from argparse import ArgumentParser, ArgumentDefaultsHelpFormatter
 from insilico_pcr import InSilicoPCR, Amplicon
-from genotype import Genotyper
+from genotype import Genotyper, rough_flag
 import multiprocessing
 import assays
 import sys
@@ -111,11 +111,19 @@ class BruceLadder(object):
                                 if amplicon.sample == sample and amplicon.assay == assay},
                                reverse=True)
                 call, pattern, extra = genotyper.call(sizes=sizes)
+                # The O-antigen band is read per locus, not from the merged sizes, because a
+                # shifted product can collide with another assay band
+                wboa = sorted({amplicon.size for amplicon in self.amplicons
+                               if amplicon.sample == sample and amplicon.assay == assay
+                               and amplicon.locus == assays.ROUGH_LOCUS})
                 self.calls[(sample, assay)] = {'call': call,
                                                'sizes': sizes,
                                                'pattern': pattern,
                                                'extra': extra,
-                                               'bands': genotyper.bands}
+                                               'bands': genotyper.bands,
+                                               'rough': rough_flag(assay=assay,
+                                                                   wboa_sizes=wboa,
+                                                                   tolerance=self.tolerance)}
 
     def write_reports(self):
         """
@@ -131,7 +139,8 @@ class BruceLadder(object):
 
         call_report = os.path.join(self.outdir, 'calls.tsv')
         with open(call_report, 'w') as out:
-            out.write('\t'.join(['sample', 'assay', 'call', 'bands', 'sizes', 'extra_bands']) + '\n')
+            out.write('\t'.join(['sample', 'assay', 'call', 'rough',
+                                 'bands', 'sizes', 'extra_bands']) + '\n')
             for (sample, assay), result in sorted(self.calls.items()):
                 bands = ';'.join('{low}-{high}'.format(low=low, high=high) if high > low
                                  else str(low)
@@ -140,6 +149,7 @@ class BruceLadder(object):
                 out.write('\t'.join([sample,
                                      assay,
                                      result['call'],
+                                     result['rough'],
                                      bands,
                                      ';'.join(str(size) for size in result['sizes']),
                                      ';'.join(str(size) for size in result['extra'])]) + '\n')

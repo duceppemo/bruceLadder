@@ -86,6 +86,27 @@ strain, and no other call. Strain 2308 and the nine *abortus* field strains stil
 so the vaccine profiles do not shadow it. Note that 2308 is reported as `abortus` by this assay,
 unlike AMOS, which groups it with RB51.
 
+### The rough flag on the panel
+
+The `rough` column of `calls.tsv` reads the 1682 bp *wboA* band alone. Across the 87 genomes it
+flags 13:
+
+| Flagged | Genomes | Why |
+| --- | --- | --- |
+| *B. ovis* | 10 of 10 | Naturally rough, no *wboA* product at all |
+| RB51 | 1 | IS711 inside *wboA*, band shifted to 2526 bp |
+| LBAB009 | 1 | ~15 kb deletion removing the locus, see below |
+| *neotomae* NCTC10070 | 1 | **False positive**: a 49 contig draft, 2.94 Mb, ~370 kb short of a full genome. The locus is not in the assembly rather than not in the strain |
+
+And the one it misses:
+
+| Not flagged | Genomes | Why it matters |
+| --- | --- | --- |
+| *B. canis* | 10 of 10 | **False negative**: *B. canis* is naturally rough, but keeps an intact 1682 bp band. Its roughness does not come from losing *wboA*, so a band-level rule cannot see it |
+
+`no` therefore does not mean smooth. It means this one band is where it should be. Of the two
+naturally rough species, the flag catches *B. ovis* and misses *B. canis*.
+
 ### The one unexplained N/A: LBAB009
 
 `abortus__LBAB009__GCF_030761395.1` is the only genome in the panel that calls `N/A` for a reason

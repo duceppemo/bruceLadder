@@ -108,6 +108,16 @@ MATCH_MODE = {
 }
 
 
+# The Bruce-ladder band that reports the O-antigen locus. wboA and wboB sit inside the product of
+# this pair, so a strain whose O-antigen locus is interrupted or deleted is rough and either shows
+# the band at another size or loses it: RB51 carries IS711 inside wboA and runs at 2526 bp, while
+# B. ovis and the deleted field isolate LBAB009 give no product at all. Only this one band is read;
+# see docs/band-sizes.md for what that does and does not catch.
+ROUGH_ASSAY = 'bruce'
+ROUGH_LOCUS = 'BMEI0998_BMEI0997'
+ROUGH_INTACT_SIZE = 1682
+
+
 def assay_names():
     """
     :return: type LIST: Names of the available assays, in report order

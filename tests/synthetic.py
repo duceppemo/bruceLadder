@@ -72,6 +72,25 @@ def build_genome(assay, sizes, seed=None):
     return contigs
 
 
+def build_genome_for_loci(assay, locus_sizes, seed=None):
+    """
+    Build the contigs of a genome placing a chosen size at a chosen locus. build_genome assigns
+    loci to sizes in a fixed order, which is enough to reproduce a profile but says nothing about
+    which band came from which primer pair; this one is for tests that care.
+    :param assay: type STR: Assay name, a key of assays.PRIMERS
+    :param locus_sizes: type DICT: Locus name: product size in bp
+    :param seed: type INT: Seed for the spacer sequences, derived from the sizes when not given
+    :return: type LIST: (contig name, sequence) tuples
+    """
+    primers = assays.PRIMERS[assay]
+    rng = random.Random(seed if seed is not None else sum(locus_sizes.values()))
+    contigs = list()
+    for locus, size in sorted(locus_sizes.items()):
+        contigs.append(('{locus}_{size}'.format(locus=locus, size=size),
+                        product_contig(rng, primers[locus]['F'], primers[locus]['R'], size)))
+    return contigs
+
+
 def write_fasta(contigs, fasta_file):
     """
     :param contigs: type LIST: (contig name, sequence) tuples

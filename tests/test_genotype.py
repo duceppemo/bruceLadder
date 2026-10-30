@@ -10,7 +10,7 @@ import unittest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from genotype import Genotyper
+from genotype import Genotyper, rough_flag
 import assays
 
 __author__ = 'duceppemo'
@@ -196,6 +196,40 @@ class TestSubsetMatching(unittest.TestCase):
                 self.assertNotIn(178, sizes)
             else:
                 self.assertIn(178, sizes)
+
+
+class TestRoughFlag(unittest.TestCase):
+    """
+    The O-antigen band read as a smooth/rough flag
+    """
+
+    def test_the_intact_band_is_smooth(self):
+        self.assertEqual(rough_flag(assay='bruce', wboa_sizes=[1682]), 'no')
+
+    def test_a_shifted_band_is_rough(self):
+        # RB51 carries IS711 inside wboA, which runs the product out to 2526 bp
+        self.assertEqual(rough_flag(assay='bruce', wboa_sizes=[2526]), 'yes')
+
+    def test_a_missing_band_is_rough(self):
+        # B. ovis, and the LBAB009 field isolate that has lost the locus outright
+        self.assertEqual(rough_flag(assay='bruce', wboa_sizes=[]), 'yes')
+
+    def test_the_band_is_read_within_tolerance(self):
+        self.assertEqual(rough_flag(assay='bruce', wboa_sizes=[1685], tolerance=5), 'no')
+        self.assertEqual(rough_flag(assay='bruce', wboa_sizes=[1688], tolerance=5), 'yes')
+        self.assertEqual(rough_flag(assay='bruce', wboa_sizes=[1688], tolerance=10), 'no')
+
+    def test_an_intact_band_beside_a_shifted_one_is_smooth(self):
+        self.assertEqual(rough_flag(assay='bruce', wboa_sizes=[1682, 2526]), 'no')
+
+    def test_the_other_assays_do_not_carry_the_band(self):
+        for assay in ['suis', 'amos']:
+            self.assertEqual(rough_flag(assay=assay, wboa_sizes=[]), '')
+
+    def test_the_rb51_profile_is_rough_and_abortus_is_not(self):
+        # The flag has to agree with the profiles that encode the same two bands
+        self.assertIn(assays.ROUGH_INTACT_SIZE, assays.PROFILES['bruce']['abortus'])
+        self.assertNotIn(assays.ROUGH_INTACT_SIZE, assays.PROFILES['bruce']['RB51'])
 
 
 class TestAssayData(unittest.TestCase):

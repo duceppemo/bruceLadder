@@ -13,6 +13,21 @@ import assays
 __author__ = 'duceppemo'
 
 
+def rough_flag(assay, wboa_sizes, tolerance=5):
+    """
+    Read the Bruce-ladder O-antigen band as a smooth/rough flag
+    :param assay: type STR: Assay the sizes came from; only assays.ROUGH_ASSAY carries the band
+    :param wboa_sizes: type LIST: Sizes observed for assays.ROUGH_LOCUS in one sample
+    :param tolerance: type INT: Size tolerance in bp
+    :return: type STR: 'no' when the band is intact, 'yes' when it is shifted or missing, and an
+    empty string for an assay that does not carry the band
+    """
+    if assay != assays.ROUGH_ASSAY:
+        return ''
+    intact = any(abs(size - assays.ROUGH_INTACT_SIZE) <= tolerance for size in wboa_sizes)
+    return 'no' if intact else 'yes'
+
+
 class Genotyper(object):
 
     def __init__(self, assay, tolerance=5):

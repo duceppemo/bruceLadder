@@ -51,8 +51,8 @@ Three kinds of report are written to `--outdir`:
 
 - **`amplicons.tsv`** — every product found, with its locus, contig, strand, 1-based coordinates,
   size and the mismatch count of each primer.
-- **`calls.tsv`** — one row per sample and assay: the call, the canonical bands that were present,
-  the observed sizes, and any size belonging to no band of the assay.
+- **`calls.tsv`** — one row per sample and assay: the call, the rough flag, the canonical bands
+  that were present, the observed sizes, and any size belonging to no band of the assay.
 - **`report_<assay>.tsv`** — sample and call, two columns, no header. This is the layout
   `bruce_rates.py` and `suis_rates.py` expect.
 
@@ -66,14 +66,16 @@ Calling genotypes
 Reports written to /path/to/results
 
 $ cat results/calls.tsv
-sample          assay  call             bands         sizes         extra_bands
-RB51_or_2308    amos   RB51_or_2308     178;387;494   494;387;178
-S19             amos   S19              494           494
-abortus_bv1_2_4 amos   abortus_bv1_2_4  178;494       494;178
-melitensis      amos   melitensis       178;733       733;178
-ovis            amos   ovis             178;976       976;178
-suis_bv1        amos   suis_bv1         178;285       285;178
+sample          assay  call             rough  bands         sizes         extra_bands
+RB51_or_2308    amos   RB51_or_2308            178;387;494   494;387;178
+S19             amos   S19                     494           494
+abortus_bv1_2_4 amos   abortus_bv1_2_4         178;494       494;178
+melitensis      amos   melitensis              178;733       733;178
+ovis            amos   ovis                    178;976       976;178
+suis_bv1        amos   suis_bv1                178;285       285;178
 ```
+
+The `rough` column is empty above because only Bruce-ladder carries the band it reads.
 
 ## How a call is made
 
@@ -97,6 +99,25 @@ All primers and expected band sizes live in `assays.py` and nowhere else. Edit t
 how genotypes are called. Every primer has been checked against its publication and every band
 size against the product it gives in 87 real genomes: see
 [`docs/band-sizes.md`](docs/band-sizes.md).
+
+## The rough flag
+
+Bruce-ladder rows carry a `rough` column, read from one band and one band only: the 1682 bp
+product of `BMEI0998_BMEI0997`, which spans *wboA* and *wboB*, the two glycosyltransferases of the
+O-antigen locus. `no` means the band is intact, `yes` means it is shifted or missing, and the
+column is empty for Suis-ladder and AMOS, which do not carry that band. The flag is reported
+beside the call and never changes it.
+
+It is a reading of one band, not a phenotype:
+
+- **It misses *B. canis*.** *B. canis* is naturally rough but keeps an intact 1682 bp band, so all
+  ten *canis* genomes tested are flagged `no`. Its roughness does not come from losing *wboA*.
+- **An incomplete assembly can trip it.** A draft that simply does not contain the locus is
+  indistinguishable from one that has lost it. In testing, a 49 contig *neotomae* draft 370 kb
+  short of a full genome was flagged `yes` on that basis alone.
+
+So read `yes` as "the O-antigen band is not where it should be, look closer", and do not read `no`
+as "smooth". What it does catch is shown in [`docs/band-sizes.md`](docs/band-sizes.md).
 
 ## What the assays cannot resolve
 
