@@ -4,6 +4,13 @@
 
 <h1 align="center">brucetyper</h1>
 
+<p align="center">
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/duceppemo/brucetyper" alt="License"></a>
+  <img src="https://img.shields.io/badge/python-3.7%2B-blue" alt="Python 3.7+">
+  <a href="https://biopython.org/"><img src="https://img.shields.io/badge/dependency-biopython-orange" alt="Biopython"></a>
+  <img src="https://img.shields.io/github/last-commit/duceppemo/brucetyper" alt="Last commit">
+</p>
+
 In silico **Bruce-ladder**, **Suis-ladder**, **AMOS PCR** and an **RB51 junction PCR** for
 *Brucella*, run end to end from assembled genomes.
 
