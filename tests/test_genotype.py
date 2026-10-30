@@ -255,6 +255,18 @@ class TestAssayData(unittest.TestCase):
                 self.assertLessEqual(len(sizes), len(assays.PRIMERS[assay]),
                                      '{assay} {genotype}'.format(assay=assay, genotype=genotype))
 
+    def test_the_closest_pair_of_bands_of_each_assay_is_pinned(self):
+        # This gap is the ceiling on --tolerance: past half of it the two band windows overlap and
+        # band_index assigns a size in the overlap to the lower band, past the gap itself the two
+        # bands merge. Pinned so that adding a profile size beside an existing one cannot lower
+        # the ceiling unnoticed; assays.py records what each number means.
+        gaps = dict()
+        for assay in assays.assay_names():
+            bands = Genotyper(assay=assay, tolerance=5).bands
+            gaps[assay] = min(bands[index + 1][0] - bands[index][1]
+                              for index in range(len(bands) - 1))
+        self.assertEqual(gaps, {'bruce': 120, 'suis': 21, 'amos': 102, 'rb51': 463})
+
     def test_profiles_are_distinguishable_or_knowingly_merged(self):
         # Any two profiles sharing a pattern can only ever be reported together, so the set of
         # collisions is pinned here rather than discovered on real data
