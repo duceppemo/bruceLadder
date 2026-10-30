@@ -5,6 +5,7 @@
 <h1 align="center">brucetyper</h1>
 
 <p align="center">
+  <a href="https://github.com/duceppemo/brucetyper/actions/workflows/tests.yml"><img src="https://github.com/duceppemo/brucetyper/actions/workflows/tests.yml/badge.svg" alt="Tests"></a>
   <a href="LICENSE"><img src="https://img.shields.io/github/license/duceppemo/brucetyper" alt="License"></a>
   <img src="https://img.shields.io/badge/python-3.7%2B-blue" alt="Python 3.7+">
   <a href="https://biopython.org/"><img src="https://img.shields.io/badge/dependency-biopython-orange" alt="Biopython"></a>
@@ -20,7 +21,8 @@ genotype is called. No external PCR tool, no alignment step, no database.
 
 ## Requirements
 
-- Python 3.7+ (profile order matters, so insertion-ordered dicts are required)
+- Python 3.7+ (profile order matters, so insertion-ordered dicts are required). CI covers 3.9
+  through 3.13; 3.7 and 3.8 are past end of life and are not exercised.
 - [Biopython](https://biopython.org/)
 
 ```bash
