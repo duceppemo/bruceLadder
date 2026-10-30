@@ -39,12 +39,13 @@ PRIMERS = {
 }
 
 
-# Expected band sizes (bp) per genotype, carried over unchanged from the 2023
-# scripts. A genotype is called when every canonical band of the assay agrees
+# Expected band sizes (bp) per genotype, carried over from the 2023 scripts except where a
+# comment says otherwise. A genotype is called when every canonical band of the assay agrees
 # in presence/absence with one of these profiles, within --tolerance bp.
 #
-# Order matters only for reporting: profiles are listed most specific first so
-# that RB51 is named ahead of the abortus profile it also satisfies.
+# Order matters only for reporting: profiles are listed most specific first so that the
+# RB51/2308 profile is named ahead of the abortus profile it also satisfies, and S19, whose
+# single band is a subset of both, is named last.
 PROFILES = {
     'bruce': {
         'abortus': [1682, 774, 590, 450, 152],
@@ -67,12 +68,23 @@ PROFILES = {
         'bv05': [774, 614, 278, 197],
     },
     'amos': {
-        'RB51': [364, 178],
+        # The RB51/2308 primer of Bricker and Halling (1995) lies inside IS711 itself, 711 bp
+        # into the element, and pairs with the universal IS711 primer across the junction of two
+        # tandem IS711 elements. The band therefore reports that arrangement and not RB51: strain
+        # 2308 and its rough derivative RB51 give the same profile, and this assay cannot tell
+        # them apart. The junction measures 387 bp in the complete genomes of both 2308
+        # (GCF_000054005.1) and RB51 (GCF_011801185.1); the paper reports the product as 364 bp.
+        # The 494 band belongs in this profile: B. ovis carries a tandem IS711 pair of its own
+        # and yields the same 387 bp product, so the abortus band is what keeps it out.
+        'RB51_or_2308': [494, 387, 178],
         'abortus_bv1_2_4': [494, 178],
         'melitensis': [733, 178],
         'ovis': [976, 178],
         'suis_bv1': [285, 178],
-        # 'S19': [504]
+        # S19 carries a deletion that removes the eri target of the 178 bp band, so it is the one
+        # genotype of this assay without it. Listed last because its single band is a subset of
+        # the profiles above.
+        'S19': [494],
     },
 }
 
@@ -80,7 +92,8 @@ PROFILES = {
 # How observed bands are compared to a profile.
 #   exact  : every canonical band of the assay must agree in presence/absence
 #   subset : the bands of the profile must be present, additional bands are tolerated and the first
-#            matching profile wins. Needed for AMOS, where RB51 carries the abortus band as well.
+#            matching profile wins. Needed for AMOS, where RB51 and 2308 carry the abortus band
+#            as well.
 MATCH_MODE = {
     'bruce': 'exact',
     'suis': 'exact',

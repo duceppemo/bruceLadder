@@ -133,30 +133,43 @@ class TestSubsetMatching(unittest.TestCase):
             call, _, _ = self.genotyper.call(sizes=sizes)
             self.assertEqual(call, genotype)
 
-    def test_rb51_wins_over_the_abortus_band_it_also_carries(self):
+    def test_rb51_2308_wins_over_the_abortus_band_it_also_carries(self):
         # RB51 is derived from abortus 2308 and shows the abortus band as well, so profile order
         # in assays.PROFILES is what keeps it from being called abortus
-        call, _, _ = self.genotyper.call(sizes=[494, 364, 178])
-        self.assertEqual(call, 'RB51')
+        call, _, _ = self.genotyper.call(sizes=[494, 387, 178])
+        self.assertEqual(call, 'RB51_or_2308')
 
-    def test_abortus_without_the_rb51_band_is_abortus(self):
+    def test_abortus_without_the_tandem_is711_band_is_abortus(self):
         call, _, _ = self.genotyper.call(sizes=[494, 178])
         self.assertEqual(call, 'abortus_bv1_2_4')
 
-    def test_rb51_is_listed_before_abortus(self):
+    def test_rb51_2308_is_listed_before_abortus(self):
         order = list(assays.PROFILES['amos'])
-        self.assertLess(order.index('RB51'), order.index('abortus_bv1_2_4'))
+        self.assertLess(order.index('RB51_or_2308'), order.index('abortus_bv1_2_4'))
+
+    def test_s19_is_listed_last(self):
+        # The S19 profile is the abortus band on its own, a subset of every other profile that
+        # carries it, so anything but last place would shadow them
+        order = list(assays.PROFILES['amos'])
+        self.assertEqual(order.index('S19'), len(order) - 1)
+
+    def test_the_tandem_is711_band_without_the_abortus_band_is_not_rb51(self):
+        # B. ovis carries a tandem IS711 pair of its own and gives the same 387 bp product
+        call, _, _ = self.genotyper.call(sizes=[976, 387, 178])
+        self.assertEqual(call, 'ovis')
 
     def test_the_shared_band_alone_is_not_a_call(self):
         call, _, _ = self.genotyper.call(sizes=[178])
         self.assertEqual(call, 'N/A')
 
-    def test_every_amos_profile_requires_the_178_band(self):
-        # Flagged as unverified: if no primer pair of the assay yields a 178 bp product, subset
-        # matching turns every AMOS call into N/A. This test pins the assumption so that changing
-        # it is deliberate.
-        for sizes in assays.PROFILES['amos'].values():
-            self.assertIn(178, sizes)
+    def test_s19_is_the_only_amos_profile_without_the_178_band(self):
+        # The 178 bp eri product is carried by every Brucella genome tested, which is what makes
+        # its absence the S19 call: S19 carries a deletion that removes the target.
+        for genotype, sizes in assays.PROFILES['amos'].items():
+            if genotype == 'S19':
+                self.assertNotIn(178, sizes)
+            else:
+                self.assertIn(178, sizes)
 
 
 class TestAssayData(unittest.TestCase):
