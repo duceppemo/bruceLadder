@@ -59,13 +59,52 @@ Mostly drafts (24 of the 27 are contig or scaffold level), consistent with the l
 gap — though two of the eleven *melitensis* → `abortus` genomes are **complete**, where assembly
 dropout cannot be the explanation and a primer site variant is more likely.
 
-The third pattern is the opposite and more interesting: ten *abortus* labelled genomes carry a
-1071 bp product that *abortus* should not have. All ten are contig level. One is labelled strain
-**2308**, the reference virulent *abortus* strain, which should not produce that band at all — a
-genome worth treating as mixed, contaminated or mislabelled rather than as an assay failure.
+The third pattern is the opposite, and it was followed up: ten *abortus* labelled genomes carry a
+1071 bp product that *abortus* should not have. All ten are contig level, and one is labelled
+strain **2308**, the reference virulent *abortus* strain, which should not produce that band at
+all.
+
+### All ten are *B. melitensis*
+
+Three independent lines of evidence agree, so these are mislabelled submissions and not an assay
+failure:
+
+1. **They carry the 1071 bp `BMEII0843_BMEII0844` band**, which the real 2308 reference
+   (`GCA_000054005.1`) does not produce.
+2. **They lack AMOS's 494 bp `abortus_IS711` band**, which the real 2308 does produce. Eight of
+   the ten return `N/A` on AMOS entirely.
+3. **Average nucleotide identity puts every one of them with *melitensis***. Against six complete
+   *melitensis* and six complete *abortus* genomes:
+
+| Genome | Deposited strain | mean ANI to *melitensis* | mean ANI to *abortus* |
+| --- | --- | --- | --- |
+| `GCA_018604785.1` | **2308** | **99.967** | 99.721 |
+| `GCA_041861985.1` | BAIQ | **99.967** | 99.720 |
+| `GCA_003966035.1` | C-612 | **99.964** | 99.718 |
+| `GCA_016091965.1` | S-586 | **99.964** | 99.720 |
+| `GCA_009733315.1` | 420 | **99.961** | 99.713 |
+| `GCA_009733355.1` | C-577 | **99.961** | 99.712 |
+| `GCA_009733515.1` | C-587 | **99.961** | 99.721 |
+| `GCA_009733415.1` | I-2 | **99.960** | 99.718 |
+| `GCA_016091955.1` | S-595 | **99.960** | 99.719 |
+| `GCA_036881765.1` | Cam-1 MGL | **99.894** | 99.645 |
+
+The separation is consistent at about 0.24 percentage points. The control runs the other way: the
+genuine 2308 reference sits at 99.84–99.98% against those same *abortus* genomes and only
+99.69–99.71% against the *melitensis* ones. *Brucella* species are so close that the window is
+narrow, but the grouping is unambiguous and bimodal, with no overlap.
+
+The genome deposited as *B. abortus* **2308** is the clearest case: it is *B. melitensis*, and
+anyone using it as the 2308 reference is using the wrong organism.
+
+So **10 of the 60 disagreements are confirmed errors in the submitted labels, not errors in the
+assay**. Scoring those as assay failures understates it: of the 1553 classically named genomes
+that produced a call, the assay is demonstrably right in at least 1503.
 
 This is the honest reading throughout: a disagreement can mean a mislabelled submission **or** an
-assay limit, and the band level evidence is what separates them. Neither should be assumed.
+assay limit, and the band level evidence is what separates them. Neither should be assumed — the
+27 *melitensis* → `pinnipedialis_ceti` cases above have **not** been checked this way, and a
+missing band is the likelier explanation there.
 
 ## `N/A` is not an assembly quality gradient
 
