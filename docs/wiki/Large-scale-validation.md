@@ -15,12 +15,12 @@ Taxid 234 is no longer one organism. *Ochrobactrum* was folded into *Brucella* i
 taxid now spans the classical pathogens and a set of environmental and opportunistic species that
 these assays were never designed to see. They are counted separately throughout.
 
-| Group | Genomes | Bruce-ladder `N/A` |
-| --- | --- | --- |
-| Classical named species | 1612 | 59 (4%) |
-| *Ochrobactrum*-derived | 333 | **333 (100%)** |
-| Unnamed classical clade (`Brucella sp.`, *amazoniensis*) | 102 | 64 (63%) |
-| *B. pecoris* | 4 | 4 (100%) |
+| Group | `group` in the table | Genomes | Bruce-ladder `N/A` |
+| --- | --- | --- | --- |
+| Classical named species | `classical named` | 1612 | 59 (4%) |
+| *Ochrobactrum*-derived | `Ochrobactrum-derived` | 333 | **333 (100%)** |
+| Unnamed classical clade: `Brucella sp.`, *amazoniensis* | `unnamed classical-clade` | 102 | 64 (63%) |
+| *B. pecoris* | `pecoris` | 4 | 4 (100%) |
 
 ## Specificity: the assay stays silent where it should
 

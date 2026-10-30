@@ -4,6 +4,10 @@ __pycache__/
 # Test and analysis output
 .pytest_cache/
 results/
+.coverage
+.coverage.*
+coverage.xml
+sitecustomize.py
 
 # Virtual environments
 venv/

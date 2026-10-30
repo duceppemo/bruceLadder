@@ -1,4 +1,4 @@
-# How a call is made
+# Methods
 
 ## How a call is made
 

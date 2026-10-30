@@ -6,8 +6,6 @@ in_file = sys.argv[1] if len(sys.argv) > 1 else 'report_suis.tsv'
 biovar_list = ['bv01', 'bv02', 'bv03', 'bv04', 'bv05']
 
 for biovar in biovar_list:
-    if biovar == 'bv04':
-        t=1
     bv = biovar[-1]
     preID = 0
     pos = 0

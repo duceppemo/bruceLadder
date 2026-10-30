@@ -9,7 +9,6 @@ concurrency = multiprocessing
 omit =
     tests/*
     sitecustomize.py
-    setup.py
 
 [report]
 exclude_lines =
