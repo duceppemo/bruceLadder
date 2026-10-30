@@ -293,7 +293,25 @@ class TestInputHandling(unittest.TestCase):
             run_cli(self.indir, self.outdir, '--suis')
         self.assertIn('No FASTA files found', raised.exception.stderr)
 
+    def test_two_files_giving_the_same_sample_name_fail(self):
+        # bv03.fasta and bv03.fna both reduce to sample 'bv03'. Pooling their amplicons would
+        # report two genomes as one call, so this has to be refused rather than merged
+        write_fasta(self.contigs, os.path.join(self.indir, 'bv03.fasta'))
+        write_fasta(self.contigs, os.path.join(self.indir, 'bv03.fna'))
+        with self.assertRaises(subprocess.CalledProcessError) as raised:
+            run_cli(self.indir, self.outdir, '--suis')
+        self.assertIn('same sample name', raised.exception.stderr)
+        self.assertIn('bv03.fasta', raised.exception.stderr)
+        self.assertIn('bv03.fna', raised.exception.stderr)
 
+    def test_a_file_left_beside_its_gzipped_copy_fails(self):
+        # The .gz is stripped before the extension, so bv03.fasta and bv03.fasta.gz collide too
+        path = write_fasta(self.contigs, os.path.join(self.indir, 'bv03.fasta'))
+        with open(path, 'rb') as handle, gzip.open(path + '.gz', 'wb') as out:
+            out.write(handle.read())
+        with self.assertRaises(subprocess.CalledProcessError) as raised:
+            run_cli(self.indir, self.outdir, '--suis')
+        self.assertIn('same sample name', raised.exception.stderr)
 
 
 class TestRoughColumn(unittest.TestCase):
