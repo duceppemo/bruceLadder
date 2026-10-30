@@ -7,6 +7,7 @@
 <p align="center">
   <a href="https://github.com/duceppemo/brucetyper/actions/workflows/tests.yml"><img src="https://github.com/duceppemo/brucetyper/actions/workflows/tests.yml/badge.svg" alt="Tests"></a>
   <a href="https://codecov.io/gh/duceppemo/brucetyper"><img src="https://codecov.io/gh/duceppemo/brucetyper/graph/badge.svg" alt="Coverage"></a>
+  <a href="https://pypi.org/project/brucetyper/"><img src="https://img.shields.io/pypi/v/brucetyper" alt="PyPI"></a>
   <img src="https://img.shields.io/badge/python-3.7%2B-blue" alt="Python 3.7+">
   <a href="LICENSE"><img src="https://img.shields.io/github/license/duceppemo/brucetyper" alt="License"></a>
   <a href="https://github.com/duceppemo/brucetyper/wiki"><img src="https://img.shields.io/badge/docs-wiki-informational" alt="Documentation"></a>
@@ -30,15 +31,22 @@ genotype is called. No external PCR tool, no alignment step, no database.
 ## Quick start
 
 ```bash
+pip install brucetyper
+
+# Every assay, on a folder of assemblies
+brucetyper -i genomes/ -o results/
+
+# One assay, on a single genome
+brucetyper -i GCF_000054005.1.fna.gz -o results/ --amos
+```
+
+Or from a clone, where `python bruce_ladder.py` takes the same arguments as `brucetyper`:
+
+```bash
 git clone https://github.com/duceppemo/brucetyper
 cd brucetyper
 pip install biopython
-
-# Every assay, on a folder of assemblies
 python bruce_ladder.py -i genomes/ -o results/
-
-# One assay, on a single genome
-python bruce_ladder.py -i GCF_000054005.1.fna.gz -o results/ --amos
 ```
 
 Input is a FASTA file or a folder of them, gzipped or not, one sample per file. Assemblies, not
@@ -64,8 +72,10 @@ RB51    rb51   RB51                 919                       1300;919          
 Everything else is in the [wiki](https://github.com/duceppemo/brucetyper/wiki), whose sources are
 maintained in [`docs/wiki`](docs/wiki):
 
-- [Usage](https://github.com/duceppemo/brucetyper/wiki/Usage) — requirements, inputs, every option,
-  and the three reports
+- [Installation](https://github.com/duceppemo/brucetyper/wiki/Installation) — pip, pipx, from a
+  clone, and what gets installed
+- [Usage](https://github.com/duceppemo/brucetyper/wiki/Usage) — inputs, every option, and the
+  three reports
 - [Methods](https://github.com/duceppemo/brucetyper/wiki/Methods) — how sizes become canonical
   bands, how a profile is matched, how the rough flag is read
 - [The assays](https://github.com/duceppemo/brucetyper/wiki/Assays) — what each resolves, what it
@@ -80,7 +90,8 @@ maintained in [`docs/wiki`](docs/wiki):
 - [Development](https://github.com/duceppemo/brucetyper/wiki/Development) — the test suite and the
   legacy 2023 scripts
 
-All primers and expected band sizes live in [`assays.py`](assays.py) and nowhere else. Edit that
+All primers and expected band sizes live in [`brucetyper/assays.py`](brucetyper/assays.py) and
+nowhere else. Edit that
 file to change how genotypes are called.
 
 ## Related

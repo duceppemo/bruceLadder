@@ -330,7 +330,7 @@ ground truth.
 
 ```bash
 # the accession list is the group column of the results table
-python bruce_ladder.py -i genomes/ -o results/
+brucetyper -i genomes/ -o results/
 ```
 
 The real-time PCR cross-check above is not part of brucetyper, which reads amplicon sizes the way

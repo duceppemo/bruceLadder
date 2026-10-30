@@ -5,7 +5,7 @@ title: "brucetyper: in silico Bruce-ladder, Suis-ladder, AMOS and RB51 junction 
 authors:
   - family-names: Duceppe
     given-names: Marc-Olivier
-version: 1.0.0
+version: 1.1.0
 date-released: 2026-10-30
 license: MIT
 doi: "10.5281/zenodo.23815138"

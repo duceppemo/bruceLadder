@@ -5,7 +5,7 @@
 The sizes an assay's profiles use are first merged into **canonical bands**: sizes within
 `--tolerance` of each other become one band, because no gel separates them. Each sample is then
 reduced to the presence or absence of every canonical band, and that pattern is compared to the
-profiles in [`assays.py`](https://github.com/duceppemo/brucetyper/blob/main/assays.py):
+profiles in [`brucetyper/assays.py`](https://github.com/duceppemo/brucetyper/blob/main/brucetyper/assays.py):
 
 - **Bruce-ladder and Suis-ladder** match **exactly** — every canonical band must agree in presence
   and absence.
@@ -18,7 +18,7 @@ genotypes, both names are reported joined by `/`.
 Repeated loci are collapsed before calling: a locus present several times in a genome yields
 several products of the same size, which a gel shows as one band.
 
-All primers and expected band sizes live in `assays.py` and nowhere else. Edit that file to change
+All primers and expected band sizes live in `brucetyper/assays.py` and nowhere else. Edit that file to change
 how genotypes are called. Every primer has been checked against its publication and every band
 size against the product it gives in 87 real genomes: see
 [Validation](https://github.com/duceppemo/brucetyper/wiki/Validation).
