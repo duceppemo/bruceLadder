@@ -19,9 +19,13 @@ below 87 for the discriminating loci.
 
 ## Primer sequences
 
-**All 36 primer sequences in `assays.py` match the published sequences exactly.** No
-substitutions, no typos. Two apparent discrepancies were checked and resolved in favour of
-`assays.py`:
+**All 40 primer entries in `assays.py`, 33 distinct sequences, match the published sequences
+exactly.** No substitutions, no typos. Entries outnumber sequences because several are reused: the
+universal IS711 primer serves five AMOS loci, the `BMEI1426_BMEI1427` pair serves both Suis-ladder
+and Bruce-ladder, and primer 3 serves both loci of the RB51 junction assay. The three sequences
+added later for that assay were read from Fig. 1 of Vemulapalli *et al.* 1999 and are covered
+under [RB51 junction PCR](#rb51-junction-pcr) below.
+Two apparent discrepancies were checked and resolved in favour of `assays.py`:
 
 | Primer | Printed elsewhere as | Resolution |
 | --- | --- | --- |
@@ -82,7 +86,8 @@ after this validation:
 | `S19` | 1682, 774, 450, 152 | the 590 bp BMEII0428 band is absent | GCF_000018725.1, GCF_038420195.1 |
 
 Adding them changed three calls in the 87 genome panel, all from `N/A` to the right vaccine
-strain, and no other call. Strain 2308 and the nine *abortus* field strains still call `abortus`,
+strain, and no other call. Strain 2308 and eight of the nine *abortus* field strains still call `abortus`, the ninth being
+LBAB009, which calls `N/A` for the unrelated reason given below,
 so the vaccine profiles do not shadow it. Note that 2308 is reported as `abortus` by this assay,
 unlike AMOS, which groups it with RB51.
 
@@ -149,6 +154,97 @@ Published sizes from Bricker and Halling 1994 and 1995.
 | `suis_IS711` | 285 | 285 | 285 (2), 276 (1) | 3 | 285 confirmed in 1330; amplifies in very few genomes |
 | `RB51_2308_IS711` | 364 | **387** | **387** | 10 | Published size is 23 bp low. 387 in 2308 and RB51, and in 7 *ovis* and 1 *pinnipedialis*, which carry their own tandem IS711 pair. 2112 bp in three *ceti* |
 | `eri` | 178 | 178 | 178 | 85 | Present in every genome but S19 |
+
+## RB51 junction PCR
+
+Primers from Vemulapalli *et al.* 1999, Fig. 1. Validated over the same 87 genomes with `--rb51`.
+
+### The three primers
+
+| | Sequence | Role |
+| --- | --- | --- |
+| Primer 3 | `GCCAACCAACCCAAATGCTCACAA` | Forward, in *wboA* upstream of the insertion point. Shared by both pairs |
+| Primer 1 | `TTAAGCGCTGATGCCATTTCCTTCAC` | Reverse, in *wboA* downstream of the insertion point |
+| Primer 2 | `TTTAGTTTGCCGTAATATAGGT` + `CTAGAACCTGTC` | Reverse, **chimeric**: 22 bases of *wboA* fused to 12 bases of IS711 |
+
+Primer 2 is what makes the assay specific. Its *wboA* half has an exact site in each of the 75
+genomes that carry the locus and in none of the other 12. Its IS711 half is the **terminal** 12 bp
+of the element's right end, not an internal stretch, so its site count does not track IS711 copy
+number: one to three exact sites per genome, 14 genomes having only one, and in 2308 only one of
+its two sites is a real IS711 end, the other a coincidental 12-mer. The **fused** 34-mer has an
+exact site in RB51 and in no other genome. It cannot anneal unless IS711 is inside *wboA*.
+
+The whole margin lives in primer 2's 3' terminal 8 bases. In every *wboA* bearing non-RB51 genome
+the target reads `TTCAAGCG|CTAG|ACCTATATTACGGCAAACTAAA` against the primer's
+`GACAGGTT|CTAG|ACCTATATTACGGCAAACTAAA`: the 22 base *wboA* half and the first 4 bases of the
+IS711 half already match, and all five mismatches fall in the last 8 bases, the 3' terminal base
+included. The mismatch budget and the 3' anchor therefore block it independently.
+
+### The insertion
+
+Aligning the RB51 and 2308 *wboA* products places the insertion 342 bp into the Bruce-ladder
+amplicon, at RB51 `NZ_CP046720.1:964,987`, spanning 964,987–965,830. The insertion adds **844 bp**,
+which is the whole difference between the two sizes of the `wboA` locus below. IS711 is usually
+quoted as 842 bp in the literature; 844 bp is what these assemblies carry, and a second full
+length copy in 2308 (`NC_007618.1:541,972`) measures 844 bp as well.
+
+The breakpoint is ambiguous over a 4 bp window from sequence alone, because the *wboA* target and
+the element both end in `CTAG`: a naive common prefix and suffix walk returns 964,983 and an
+840 bp insert. 964,987 is the placement at which the insert begins with the conserved IS711 left
+end `GGCGTGTCTGCA`, which is what fixes it.
+
+### Band sizes
+
+| Locus | Primers | In `assays.py` | Observed in silico | n | Note |
+| --- | --- | --- | --- | --- | --- |
+| `wboA` | 3 + 1 | 456 | 456 (74), 1300 (1) | 74 | 1300 bp is RB51, 456 + the 844 bp insertion. It is deliberately not a profile size: it is tolerated as an extra band so that an RB51 draft missing it still calls RB51. No product in the 12 genomes without the locus |
+| `wboA_IS711` | 3 + 2 | 919 | **919** | **1** | RB51 only, 0 mismatches on both primers. No product in the other 86 genomes, 2308 and S19 included |
+
+The sizes Vemulapalli *et al.* print for these products are **not** recorded here, unlike every
+other assay in this file: the figure gives the primer sequences but no sizes, and the sizes quoted
+for this assay in secondary sources could not be reconciled with any genome, so only the observed
+values are stated. See [Two sets of primers that are not this assay](#two-sets-of-primers-that-are-not-this-assay).
+
+### Calls over the 87 genomes
+
+| Genomes | Call | Why |
+| --- | --- | --- |
+| RB51 | `RB51` | 919 bp junction band, plus 1300 bp in `extra_bands` |
+| 74 others | `not_RB51` | *wboA* intact at 456 bp, no junction band |
+| 10 *B. ovis* | `N/A` | Naturally no *wboA* product at all |
+| *abortus* LBAB009 | `N/A` | O-antigen locus deleted, see above |
+| *neotomae* NCTC10070 | `N/A` | 49 contig draft that does not contain the locus |
+
+No false positive, and every call the assay declined to make was a genome with no *wboA* locus to
+read rather than a silent failure.
+
+### What the mismatch budget is carrying
+
+The `N/A` set is the set of genomes in which primer 3 has no site **within the tolerated mismatch
+budget**, which is not the same as having no exact site. Primer 3 has no exact site in **19** of
+the 87 genomes: the 12 above, plus seven *B. suis* biovar 2 genomes that carry
+`GCCAACCA`**`C`**`CCCAAATGCTCACAA`, an A→C transversion at primer position 9. Primer 1 matches
+those seven exactly, so at the default `--mismatches 2` they give a clean 456 bp product and call
+`not_RB51`; at `--mismatches 0` they fall to `N/A` and the panel splits 19 / 67 / 1 instead of
+12 / 74 / 1. The SNP sits far from the 3' end, so the `--three-prime` anchor does not block it.
+
+In the other direction the assay has room to spare. The next best placement of primer 2 anywhere
+in the panel, on either strand and with no 3' anchoring, is **5 mismatches**, so the calls are
+unchanged from `--mismatches 2` through `--mismatches 6`. That 5 mismatch site is real and sits
+75 bp from the primer 3 site in all 74 *wboA* bearing non-RB51 genomes — it is the intended target
+minus the element. Forced through with `--mismatches 8 --three-prime 0`, it yields a 75 bp product
+in all 74, and the calls still come out 1 / 74 / 12, because 75 bp is nowhere near the 919 bp
+band.
+
+### Two sets of primers that are not this assay
+
+Both were checked against the genomes and rejected, which is why the sequences above were taken
+from the figure rather than from the surrounding text:
+
+| Sequences | Verdict |
+| --- | --- |
+| `TTATCGCAATCCATCGCGAT`, `AGTGCGACGGAGAGTCCCAA`, quoted for this assay by secondary sources | **Not *Brucella*.** The best placement of either anywhere in RB51 or 2308 is 4 mismatches, and 6 or more in the O-antigen region itself |
+| `GGATGTCGACCAGCCCTCCACATCAATAGC`, `TTGCGGATCCTTTACTCGTCCGTCTCTTAC`, from the paper's methods section | **Genuine but not diagnostic.** They match exactly once their engineered SalI and BamHI tails are set aside, but they are the cloning primers used to characterise the insertion: they flank the whole gene and give 2114 bp in 2308 against 2958 bp in RB51, both strains amplifying |
 
 ## Summary of differences
 

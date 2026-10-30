@@ -36,6 +36,18 @@ PRIMERS = {
         'RB51_2308_IS711': {'F': 'CCCCGGAAGATATGCTTCGATCC', 'R': 'TGCCGATCACTTAAGGGCCTTCAT'},
         'eri': {'F': 'GCGCCGCGAAGAACTTATCAA', 'R': 'CGCCATGTTAGCGGCGGTGA'},
     },
+    # The three primers of Vemulapalli et al. 1999, Fig. 1, as two pairs sharing the forward
+    # primer. Primer 3 is the shared forward primer, in wboA upstream of the insertion point.
+    'rb51': {
+        # Primer 3 + primer 1, both in wboA either side of the insertion point: 456 bp when wboA
+        # is intact, 1300 bp in RB51, where the insertion adds 844 bp between them.
+        'wboA': {'F': 'GCCAACCAACCCAAATGCTCACAA', 'R': 'TTAAGCGCTGATGCCATTTCCTTCAC'},
+        # Primer 3 + primer 2. Primer 2 is chimeric: its 5' 22 bases are wboA and its 3' 12 bases
+        # are IS711, so it anneals only where the two are fused. Each half occurs on its own in
+        # the 75 genomes carrying the locus; the fused sequence exists in RB51 and nowhere else.
+        'wboA_IS711': {'F': 'GCCAACCAACCCAAATGCTCACAA',
+                       'R': 'TTTAGTTTGCCGTAATATAGGTCTAGAACCTGTC'},
+    },
 }
 
 
@@ -43,9 +55,11 @@ PRIMERS = {
 # comment says otherwise. A genotype is called when every canonical band of the assay agrees
 # in presence/absence with one of these profiles, within --tolerance bp.
 #
-# Order matters only for reporting: profiles are listed most specific first so that the
-# RB51/2308 profile is named ahead of the abortus profile it also satisfies, and S19, whose
-# single band is a subset of both, is named last.
+# Order is load-bearing for any assay matched as a subset: Genotyper stops at the first profile
+# that fits, so for amos and rb51 the listing order decides the call itself, not just the name.
+# Profiles are listed most specific first so that the RB51/2308 profile is named ahead of the
+# abortus profile it also satisfies, and S19, whose single band is a subset of both, is named
+# last. For the exact-matched assays the order only affects reporting.
 PROFILES = {
     'bruce': {
         'abortus': [1682, 774, 590, 450, 152],
@@ -93,6 +107,25 @@ PROFILES = {
         # the profiles above.
         'S19': [494],
     },
+    # A confirmatory assay for one question only: is this RB51 or not. The 919 bp junction band is
+    # diagnostic on its own and 1300 is not a canonical band of the assay, so it is tolerated as an
+    # extra band under either match mode. What subset mode actually buys is the sample showing both
+    # 456 and 919 - a mixed culture, or a co-assembly of RB51 with a smooth strain - which exact
+    # matching would drop to N/A. RB51 is listed first so that such a sample is called RB51 rather
+    # than not_RB51: do not reorder these two. A genome with neither band has no readable wboA
+    # locus and is called N/A.
+    #
+    # Two limits of matching on size alone, neither reachable at sane settings, both recorded so
+    # that a later edit does not walk into them. Profiles name sizes and never loci, so nothing
+    # requires the 919 bp band to have come from the wboA_IS711 pair: an insertion of about 463 bp
+    # at the same site would make the plain wboA pair yield 919 bp and call RB51. No such Brucella
+    # element is known, and amplicons.tsv always records which locus gave the band. Separately,
+    # the two bands lie 463 bp apart, so a --tolerance of 463 or more merges them into one and
+    # every smooth genome calls RB51; the default is 5.
+    'rb51': {
+        'RB51': [919],
+        'not_RB51': [456],
+    },
 }
 
 
@@ -100,11 +133,12 @@ PROFILES = {
 #   exact  : every canonical band of the assay must agree in presence/absence
 #   subset : the bands of the profile must be present, additional bands are tolerated and the first
 #            matching profile wins. Needed for AMOS, where RB51 and 2308 carry the abortus band
-#            as well.
+#            as well, and for rb51, where a sample carrying both bands must call RB51.
 MATCH_MODE = {
     'bruce': 'exact',
     'suis': 'exact',
     'amos': 'subset',
+    'rb51': 'subset',
 }
 
 
@@ -122,4 +156,4 @@ def assay_names():
     """
     :return: type LIST: Names of the available assays, in report order
     """
-    return ['bruce', 'suis', 'amos']
+    return ['bruce', 'suis', 'amos', 'rb51']

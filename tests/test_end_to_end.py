@@ -121,6 +121,81 @@ class TestAmosPcr(AssayCallsMixin, unittest.TestCase):
     assay = 'amos'
 
 
+class TestRb51Pcr(unittest.TestCase):
+    """
+    The RB51 junction assay reads two loci, so the arbitrary locus order of build_genome is not
+    enough: each genome here places a chosen size at a chosen locus.
+    """
+
+    # Literal on purpose. Reading these out of assays.PROFILES would build the synthetic genomes
+    # from the very table under test, so every assertion below would hold even if the table were
+    # wrong: inverting the two sizes, or reordering the two profiles, would still pass.
+    JUNCTION = 919
+    INTACT = 456
+    INTERRUPTED = 1300
+
+    @classmethod
+    def setUpClass(cls):
+        cls.tempdir = tempfile.mkdtemp()
+        cls.indir = os.path.join(cls.tempdir, 'genomes')
+        cls.outdir = os.path.join(cls.tempdir, 'results')
+        os.makedirs(cls.indir)
+        genomes = {
+            # RB51: the junction band, and the wboA band lengthened by the element
+            'rb51': {'wboA_IS711': cls.JUNCTION, 'wboA': cls.INTERRUPTED},
+            # Any strain with an intact wboA: that band alone, no junction
+            'smooth': {'wboA': cls.INTACT},
+            # An RB51 draft that lost the long wboA band: the junction band still calls it
+            'rb51_draft': {'wboA_IS711': cls.JUNCTION},
+            # Both bands at once, as a mixed culture or an RB51 plus smooth co-assembly gives.
+            # This is the only input where subset and exact matching disagree, and the only one
+            # whose call depends on the order of the two profiles.
+            'mixed': {'wboA': cls.INTACT, 'wboA_IS711': cls.JUNCTION},
+        }
+        for name, locus_sizes in genomes.items():
+            write_fasta(build_genome_for_loci(assay='rb51', locus_sizes=locus_sizes),
+                        os.path.join(cls.indir, '{name}.fasta'.format(name=name)))
+        # A genome with no wboA locus at all, built from another assay's primers
+        write_fasta(build_genome(assay='suis', sizes=assays.PROFILES['suis']['bv03']),
+                    os.path.join(cls.indir, 'no_wboa.fasta'))
+        run_cli(cls.indir, cls.outdir, '--rb51', '-t', '1')
+        cls.calls = read_calls(cls.outdir)
+
+    @classmethod
+    def tearDownClass(cls):
+        shutil.rmtree(cls.tempdir)
+
+    def test_the_junction_band_calls_rb51(self):
+        self.assertEqual(self.calls[('rb51', 'rb51')]['call'], 'RB51')
+
+    def test_an_intact_wboa_band_calls_not_rb51(self):
+        self.assertEqual(self.calls[('smooth', 'rb51')]['call'], 'not_RB51')
+
+    def test_the_junction_band_alone_still_calls_rb51(self):
+        self.assertEqual(self.calls[('rb51_draft', 'rb51')]['call'], 'RB51')
+
+    def test_no_wboa_locus_calls_na(self):
+        self.assertEqual(self.calls[('no_wboa', 'rb51')]['call'], 'N/A')
+
+    def test_the_interrupted_wboa_band_is_reported_as_an_extra_band(self):
+        self.assertEqual(self.calls[('rb51', 'rb51')]['extra_bands'], str(self.INTERRUPTED))
+
+    def test_the_assay_carries_no_rough_flag(self):
+        self.assertEqual(self.calls[('rb51', 'rb51')]['rough'], '')
+
+    def test_both_bands_together_call_rb51(self):
+        # Fails if rb51 is switched to exact matching (N/A) or if the profiles are reordered
+        # (not_RB51), either of which would report a vaccine strain as negative
+        self.assertEqual(self.calls[('mixed', 'rb51')]['call'], 'RB51')
+
+    def test_the_profile_table_is_the_documented_one(self):
+        # Sizes and order are both asserted: Genotyper stops at the first profile that fits, so
+        # listing not_RB51 first would change the call of a sample carrying both bands
+        self.assertEqual(list(assays.PROFILES['rb51'].items()),
+                         [('RB51', [self.JUNCTION]), ('not_RB51', [self.INTACT])])
+        self.assertEqual(assays.MATCH_MODE['rb51'], 'subset')
+
+
 class TestReports(unittest.TestCase):
 
     def setUp(self):

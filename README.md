@@ -4,8 +4,8 @@
 
 <h1 align="center">bruceLadder</h1>
 
-In silico **Bruce-ladder**, **Suis-ladder** and **AMOS PCR** for *Brucella*, run end to end from
-assembled genomes.
+In silico **Bruce-ladder**, **Suis-ladder**, **AMOS PCR** and an **RB51 junction PCR** for
+*Brucella*, run end to end from assembled genomes.
 
 For every FASTA file the primer pairs of each requested assay are located directly in the
 nucleotide sequence, the resulting amplicon sizes are read the way a gel would be read, and a
@@ -34,7 +34,7 @@ Input is a FASTA file or a folder of them, gzipped or not, one sample per file. 
 extensions are `.fasta`, `.fa`, `.fna`, `.fas`, `.seq` and `.ffn`, each optionally `.gz`. The
 sample name is the file name with those extensions stripped. Assemblies, not reads.
 
-`--bruce`, `--suis` and `--amos` select the assays; with none given, all three are run.
+`--bruce`, `--suis`, `--amos` and `--rb51` select the assays; with none given, all four are run.
 
 | Option | Default | What it does |
 | --- | --- | --- |
@@ -86,8 +86,8 @@ profiles in [`assays.py`](assays.py):
 
 - **Bruce-ladder and Suis-ladder** match **exactly** — every canonical band must agree in presence
   and absence.
-- **AMOS** matches on a **subset** — the bands of the profile must be present, extra bands are
-  tolerated, and the first profile listed that fits wins.
+- **AMOS** and the **RB51 junction PCR** match on a **subset** — the bands of the profile must be
+  present, extra bands are tolerated, and the first profile listed that fits wins.
 
 A sample matching no profile is called `N/A`. When an assay genuinely cannot separate two
 genotypes, both names are reported joined by `/`.
@@ -105,7 +105,7 @@ size against the product it gives in 87 real genomes: see
 Bruce-ladder rows carry a `rough` column, read from one band and one band only: the 1682 bp
 product of `BMEI0998_BMEI0997`, which spans *wboA* and *wboB*, the two glycosyltransferases of the
 O-antigen locus. `no` means the band is intact, `yes` means it is shifted or missing, and the
-column is empty for Suis-ladder and AMOS, which do not carry that band. The flag is reported
+column is empty for Suis-ladder, AMOS and the RB51 junction PCR, which do not carry that band. The flag is reported
 beside the call and never changes it.
 
 It is a reading of one band, not a phenotype:
@@ -128,13 +128,49 @@ These are properties of the assays, not of the implementation:
   size tolerance separates, so both are reported as `suis_bv2/suis_bv1_3_4`.
   *B. pinnipedialis*/*B. ceti* sometimes shows one extra band of roughly 1100 to 1700 bp. The
   vaccine strains RB51 and S19 are each resolved by a single band, but their parent 2308 is
-  reported as `abortus`.
+  reported as `abortus`: Bruce-ladder never confuses RB51 with 2308, but it cannot separate 2308
+  from any other *abortus* bv 1/2/4 field strain. AMOS does separate them, by the 387 bp band, but
+  that band reports an IS711 arrangement rather than the strain.
 - **AMOS**: the RB51 primer lies inside IS711 itself and pairs with the universal IS711 primer
   across the junction of two tandem elements, so the band reports that arrangement rather than the
   strain. Vaccine strain RB51 and its parent 2308 are indistinguishable here and are reported as
   `RB51_or_2308`. *B. ovis* carries a tandem IS711 pair of its own and gives the same product; the
   abortus band is what keeps the two apart. S19 is called on the absence of the 178 bp *eri* band,
-  which its deletion removes.
+  which its deletion removes. Use `--rb51` to separate RB51 from 2308.
+- **RB51 junction PCR**: it answers RB51 or not RB51 and nothing else. A strain with no readable
+  *wboA* locus, *B. ovis* included, is called `N/A` rather than `not_RB51`. Seven *B. suis* bv 2
+  genomes in the validation panel reach their `not_RB51` call on a one-mismatch primer 3 site, so
+  running this assay at `--mismatches 0` turns them into `N/A`.
+
+## The RB51 junction assay
+
+`--rb51` is the three primer assay of Vemulapalli *et al.* 1999, which answers one question: is
+this RB51 or not. It exists because AMOS cannot tell RB51 from its parent 2308 at all, and because
+Bruce-ladder answers only indirectly, by reading the 1682 bp *wboA* band shifted to 2526 bp — a
+long band that a draft assembly can lose, and losing it drops the sample to `N/A` rather than to
+RB51.
+
+The three primers are entered as two pairs sharing the forward primer:
+
+| Locus | Primers | Product | What it means |
+| --- | --- | --- | --- |
+| `wboA` | 3 + 1, either side of the insertion point | 456 bp intact, 1300 bp in RB51, absent when the locus is gone | *wboA* is there, and whether something sits inside it |
+| `wboA_IS711` | 3 + 2 | 919 bp | IS711 is inside *wboA*. **RB51 and nothing else.** |
+
+Primer 2 is the trick of the assay: it is **chimeric**, its 5' 22 bases *wboA* and its 3' 12 bases
+IS711, so it anneals only where the two are fused. Each half occurs on its own in the *Brucella*
+genomes that carry the locus; the fused sequence exists in RB51 and nowhere else.
+
+| Call | Read as |
+| --- | --- |
+| `RB51` | The 919 bp junction band is present |
+| `not_RB51` | No junction band, and *wboA* is intact at 456 bp |
+| `N/A` | Neither band: there is no *wboA* locus to read, so the assay cannot speak |
+
+The junction band alone makes the call, so an RB51 draft that has lost the long 1300 bp band still
+calls `RB51`, and that band is reported in `extra_bands` rather than required. The 456 bp band is
+the one doing the other half of the work: it is what separates `not_RB51` from `N/A`, making a
+negative mean "*wboA* is intact and uninterrupted" instead of "nothing amplified".
 
 ## Tests
 
@@ -181,3 +217,18 @@ species or biovar names embedded in file names and have their input paths hard-c
 - Bricker BJ, Halling SM. Enhancement of the *Brucella* AMOS PCR assay for differentiation of
   *Brucella abortus* vaccine strains S19 and RB51. *J Clin Microbiol*.
   1995;33(6):1640-2. [PMID 7650203](https://pubmed.ncbi.nlm.nih.gov/7650203/)
+
+**RB51 junction PCR**
+
+All three primers are taken from Fig. 1 of the paper below. Beware of secondary sources: the
+sequences circulated for this assay elsewhere match no *Brucella* genome, and the primers printed
+in the paper's own methods section are the cloning primers used to characterise the insertion, not
+the diagnostic ones. See [`docs/band-sizes.md`](docs/band-sizes.md).
+
+- Vemulapalli R, McQuiston JR, Schurig GG, Sriranganathan N, Halling SM, Boyle SM. Identification
+  of an IS711 element interrupting the *wboA* gene of *Brucella abortus* vaccine strain RB51 and a
+  PCR assay to distinguish strain RB51 from other *Brucella* species and strains. *Clin Diagn Lab
+  Immunol*. 1999;6(5):760-4. doi:10.1128/CDLI.6.5.760-764.1999.
+  [PMID 10473532](https://pubmed.ncbi.nlm.nih.gov/10473532/) ·
+  [PMC95769](https://pmc.ncbi.nlm.nih.gov/articles/PMC95769/) — free full text, Fig. 1 has the
+  primers

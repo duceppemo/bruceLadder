@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
 """
-In silico Bruce-ladder, Suis-ladder and AMOS PCR, run end to end from assembled genomes.
+In silico Bruce-ladder, Suis-ladder, AMOS and RB51 junction PCR, run end to end from assembled
+genomes.
 
 For every FASTA file the primer pairs of each requested assay are located in the sequence, the
 resulting amplicon sizes are read as a gel would be read, and a genotype is called.
@@ -44,7 +45,8 @@ class BruceLadder(object):
         # Default to every assay when none was requested
         self.assays = [assay for assay, requested in (('bruce', args.bruce),
                                                       ('suis', args.suis),
-                                                      ('amos', args.amos)) if requested]
+                                                      ('amos', args.amos),
+                                                      ('rb51', args.rb51)) if requested]
         if not self.assays:
             self.assays = assays.assay_names()
 
@@ -164,7 +166,7 @@ class BruceLadder(object):
 
 
 if __name__ == '__main__':
-    parser = ArgumentParser(description='Perform in silico Bruce-ladder, Suis-ladder and/or AMOS PCR '
+    parser = ArgumentParser(description='Perform in silico Bruce-ladder, Suis-ladder, AMOS and/or RB51 PCR '
                                         'on assembled Brucella genomes',
                             formatter_class=ArgumentDefaultsHelpFormatter)
     parser.add_argument('-i', '--input', metavar='genomes/',
@@ -180,6 +182,8 @@ if __name__ == '__main__':
                         help='Perform Suis-ladder')
     parser.add_argument('--amos', action='store_true',
                         help='Perform AMOS PCR')
+    parser.add_argument('--rb51', action='store_true',
+                        help='Perform the RB51 wboA/IS711 junction PCR')
     parser.add_argument('-t', '--threads', metavar='N',
                         type=int, default=multiprocessing.cpu_count(),
                         help='Number of FASTA files to process in parallel')
