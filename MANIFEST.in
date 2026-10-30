@@ -1,0 +1,10 @@
+include LICENSE
+include README.md
+include CITATION.cff
+
+# The whole suite, so that it can be run from an unpacked sdist. setuptools would otherwise pick
+# up tests/test_*.py and leave behind the helpers they import.
+recursive-include tests *.py
+
+# The validation record is large and belongs with the repository, not the distribution
+prune docs

@@ -9,6 +9,11 @@ results/
 coverage.xml
 sitecustomize.py
 
+# Build artefacts
+dist/
+build/
+*.egg-info/
+
 # Virtual environments
 venv/
 .venv/

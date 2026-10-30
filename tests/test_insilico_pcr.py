@@ -14,7 +14,7 @@ import unittest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from insilico_pcr import InSilicoPCR
+from brucetyper.insilico_pcr import InSilicoPCR
 from tests.synthetic import product_contig, spacer, write_fasta
 
 __author__ = 'duceppemo'

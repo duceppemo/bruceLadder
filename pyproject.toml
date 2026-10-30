@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "brucetyper"
+dynamic = ["version"]
+description = "In silico Bruce-ladder, Suis-ladder, AMOS and RB51 junction PCR for Brucella"
+readme = "README.md"
+requires-python = ">=3.7"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Marc-Olivier Duceppe", email = "marc-olivier.duceppe@inspection.gc.ca" }]
+keywords = [
+    "bioinformatics",
+    "brucella",
+    "in silico PCR",
+    "genotyping",
+    "Bruce-ladder",
+    "AMOS PCR",
+    "RB51",
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Science/Research",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+]
+dependencies = ["biopython"]
+
+[project.scripts]
+brucetyper = "brucetyper.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/duceppemo/brucetyper"
+Documentation = "https://github.com/duceppemo/brucetyper/wiki"
+Repository = "https://github.com/duceppemo/brucetyper"
+Issues = "https://github.com/duceppemo/brucetyper/issues"
+
+[tool.setuptools]
+packages = ["brucetyper"]
+
+[tool.setuptools.dynamic]
+version = { attr = "brucetyper.__version__" }

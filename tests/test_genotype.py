@@ -10,8 +10,8 @@ import unittest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from genotype import Genotyper, rough_flag
-import assays
+from brucetyper.genotype import Genotyper, rough_flag
+from brucetyper import assays
 
 __author__ = 'duceppemo'
 
