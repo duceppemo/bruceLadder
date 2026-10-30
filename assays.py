@@ -49,6 +49,13 @@ PRIMERS = {
 PROFILES = {
     'bruce': {
         'abortus': [1682, 774, 590, 450, 152],
+        # The two abortus vaccine strains, each separated from abortus by a single band. RB51 is a
+        # rough derivative of 2308 carrying IS711 inside wboA, which lengthens the 1682 bp product
+        # of BMEI0998_BMEI0997 by the element: 2526 bp in the complete genome (GCF_011801185.1),
+        # reported as ~2524 bp. S19 is missing the 590 bp band of BMEII0428, and keeps everything
+        # else abortus has (GCF_000018725.1, GCF_038420195.1).
+        'RB51': [2526, 774, 590, 450, 152],
+        'S19': [1682, 774, 450, 152],
         'melitensis': [1682, 1071, 774, 590, 450, 152],
         'ovis': [1071, 774, 590, 450, 152],
         'suis_bv2': [1682, 1071, 774, 590, 450, 272, 152],

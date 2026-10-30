@@ -71,6 +71,21 @@ The published primer itself mismatches *Brucella* at its 3' end. The consequence
 Bruce-ladder here runs on seven of its eight loci, which is consistent with 218 bp being absent
 from every profile.
 
+### Vaccine strains
+
+`RB51` and `S19` are called from the two bands that separate them from abortus, and were added
+after this validation:
+
+| Genotype | Profile | Separated from abortus by | Confirmed in |
+| --- | --- | --- | --- |
+| `RB51` | 2526, 774, 590, 450, 152 | 1682 shifts to 2526, IS711 inside *wboA* | GCF_011801185.1 |
+| `S19` | 1682, 774, 450, 152 | the 590 bp BMEII0428 band is absent | GCF_000018725.1, GCF_038420195.1 |
+
+Adding them changed three calls in the 87 genome panel, all from `N/A` to the right vaccine
+strain, and no other call. Strain 2308 and the nine *abortus* field strains still call `abortus`,
+so the vaccine profiles do not shadow it. Note that 2308 is reported as `abortus` by this assay,
+unlike AMOS, which groups it with RB51.
+
 ## Suis-ladder
 
 Published sizes from López-Goñi *et al.* 2011.

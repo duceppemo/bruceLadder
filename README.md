@@ -105,7 +105,9 @@ These are properties of the assays, not of the implementation:
 - **Bruce-ladder**: *B. microti* has the same profile as *B. suis* bv 2 and is not listed
   separately. *B. suis* bv 2 and bv 1/3/4 differ by a single bp (450 vs 451), which no gel and no
   size tolerance separates, so both are reported as `suis_bv2/suis_bv1_3_4`.
-  *B. pinnipedialis*/*B. ceti* sometimes shows one extra band of roughly 1100 to 1700 bp.
+  *B. pinnipedialis*/*B. ceti* sometimes shows one extra band of roughly 1100 to 1700 bp. The
+  vaccine strains RB51 and S19 are each resolved by a single band, but their parent 2308 is
+  reported as `abortus`.
 - **AMOS**: the RB51 primer lies inside IS711 itself and pairs with the universal IS711 primer
   across the junction of two tandem elements, so the band reports that arrangement rather than the
   strain. Vaccine strain RB51 and its parent 2308 are indistinguishable here and are reported as

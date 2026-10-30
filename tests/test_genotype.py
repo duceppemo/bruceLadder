@@ -31,7 +31,7 @@ class TestCanonicalBands(unittest.TestCase):
         # resolves, so those sizes have to end up in a single band
         bands = Genotyper(assay='bruce', tolerance=5).bands
         self.assertEqual(bands, [(152, 152), (272, 272), (450, 451), (590, 590), (774, 774),
-                                 (1071, 1071), (1682, 1682)])
+                                 (1071, 1071), (1682, 1682), (2526, 2526)])
 
     def test_suis_bands_are_all_distinct(self):
         bands = Genotyper(assay='suis', tolerance=5).bands
@@ -77,10 +77,36 @@ class TestExactMatching(unittest.TestCase):
 
     def test_resolvable_bruce_profiles_call_themselves(self):
         genotyper = Genotyper(assay='bruce', tolerance=5)
-        for genotype in ['abortus', 'melitensis', 'ovis', 'canis', 'neotomae',
+        for genotype in ['abortus', 'RB51', 'S19', 'melitensis', 'ovis', 'canis', 'neotomae',
                          'pinnipedialis_ceti']:
             call, _, _ = genotyper.call(sizes=assays.PROFILES['bruce'][genotype])
             self.assertEqual(call, genotype)
+
+    def test_rb51_is_abortus_with_the_wboA_band_shifted(self):
+        # IS711 sits inside wboA in RB51, lengthening the 1682 bp product to 2526. Everything else
+        # is the abortus pattern, so that one band is what separates them.
+        genotyper = Genotyper(assay='bruce', tolerance=5)
+        abortus = assays.PROFILES['bruce']['abortus']
+        rb51 = assays.PROFILES['bruce']['RB51']
+        self.assertEqual(sorted(set(abortus) ^ set(rb51)), [1682, 2526])
+        self.assertEqual(genotyper.call(sizes=rb51)[0], 'RB51')
+        self.assertEqual(genotyper.call(sizes=abortus)[0], 'abortus')
+
+    def test_s19_is_abortus_without_the_590_band(self):
+        # S19 differs from abortus by the absence of the BMEII0428 band and nothing else
+        genotyper = Genotyper(assay='bruce', tolerance=5)
+        abortus = assays.PROFILES['bruce']['abortus']
+        s19 = assays.PROFILES['bruce']['S19']
+        self.assertEqual(sorted(set(abortus) - set(s19)), [590])
+        self.assertEqual(sorted(set(s19) - set(abortus)), [])
+        self.assertEqual(genotyper.call(sizes=s19)[0], 'S19')
+
+    def test_the_vaccine_strains_do_not_shadow_abortus(self):
+        # Each of the three patterns has to be distinct, or an abortus field strain could be
+        # reported as a vaccine strain
+        genotyper = Genotyper(assay='bruce', tolerance=5)
+        patterns = {name: genotyper.expected[name] for name in ['abortus', 'RB51', 'S19']}
+        self.assertEqual(len(set(patterns.values())), 3)
 
     def test_suis_biovars_are_reported_as_indistinguishable(self):
         # suis bv2 and bv1/3/4 differ only by the 450 vs 451 bp band, so Bruce-ladder can never
