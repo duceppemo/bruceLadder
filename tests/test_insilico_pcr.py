@@ -112,6 +112,21 @@ class TestFindSites(unittest.TestCase):
         # The same mismatch is tolerated once the 3' end is no longer anchored there
         self.assertEqual(self.sites(seq, FORWARD, anchor_three_prime=False), [(200, 1)])
 
+    def test_an_anchor_longer_than_the_primer_matches_it_in_full(self):
+        # The anchor is clamped to the primer length, so asking for more bases than the primer has
+        # can only ever anchor all of them. Unclamped, the slice wrapped and anchored fewer: a
+        # mismatch at position 4 of this 20 bp primer was rejected at --three-prime 20 but
+        # accepted at 21 through 30, making a larger anchor looser instead of stricter.
+        mutated = FORWARD[:3] + ('A' if FORWARD[3] != 'A' else 'C') + FORWARD[4:]
+        seq = spacer(self.rng, 200) + mutated + spacer(self.rng, 200)
+        for three_prime in [len(FORWARD), len(FORWARD) + 1, len(FORWARD) + 10,
+                            len(FORWARD) * 2]:
+            pcr = InSilicoPCR(mismatches=2, three_prime=three_prime)
+            self.assertEqual(pcr.find_sites(seq=seq, primer=FORWARD, anchor_three_prime=True), [],
+                             'anchor of {n} bases let a mismatch through'.format(n=three_prime))
+            self.assertEqual(pcr.find_sites(seq=seq, primer=FORWARD, anchor_three_prime=False), [],
+                             'anchor of {n} bases let a mismatch through'.format(n=three_prime))
+
     def test_repeated_locus_yields_every_site(self):
         seq = (spacer(self.rng, 100) + FORWARD + spacer(self.rng, 100) + FORWARD +
                spacer(self.rng, 100))
