@@ -17,7 +17,7 @@ import sys
 import os
 
 __author__ = 'duceppemo'
-__version__ = '1.0'
+__version__ = '1.0.0'
 
 
 def process_sample(job):
@@ -117,20 +117,28 @@ class BruceLadder(object):
         """
         print('Calling genotypes', file=sys.stderr)
         samples = [InSilicoPCR.strain_namer(fasta_file=f) for f in self.fasta_files]
+        # Index the amplicons by sample and assay in one pass. Filtering the whole list again for
+        # every sample and assay makes this stage quadratic in the number of samples, which on a
+        # panel of a few thousand genomes costs more than the PCR it is reading.
+        #
+        # Distinct sizes only: a locus repeated in the genome yields several products of the same
+        # size, which a gel shows as a single band. The O-antigen band is indexed separately
+        # because it is read per locus, not from the merged sizes: a shifted product can collide
+        # with another band of the assay.
+        sizes_seen = dict()
+        wboa_seen = dict()
+        for amplicon in self.amplicons:
+            key = (amplicon.sample, amplicon.assay)
+            sizes_seen.setdefault(key, set()).add(amplicon.size)
+            if amplicon.locus == assays.ROUGH_LOCUS:
+                wboa_seen.setdefault(key, set()).add(amplicon.size)
         for assay in self.assays:
             genotyper = Genotyper(assay=assay, tolerance=self.tolerance)
             for sample in samples:
-                # Distinct sizes only: a locus repeated in the genome yields several products of
-                # the same size, which a gel shows as a single band
-                sizes = sorted({amplicon.size for amplicon in self.amplicons
-                                if amplicon.sample == sample and amplicon.assay == assay},
-                               reverse=True)
+                key = (sample, assay)
+                sizes = sorted(sizes_seen.get(key, set()), reverse=True)
                 call, pattern, extra = genotyper.call(sizes=sizes)
-                # The O-antigen band is read per locus, not from the merged sizes, because a
-                # shifted product can collide with another assay band
-                wboa = sorted({amplicon.size for amplicon in self.amplicons
-                               if amplicon.sample == sample and amplicon.assay == assay
-                               and amplicon.locus == assays.ROUGH_LOCUS})
+                wboa = sorted(wboa_seen.get(key, set()))
                 self.calls[(sample, assay)] = {'call': call,
                                                'sizes': sizes,
                                                'pattern': pattern,
