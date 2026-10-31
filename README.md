@@ -8,6 +8,7 @@
   <a href="https://github.com/duceppemo/brucetyper/actions/workflows/tests.yml"><img src="https://github.com/duceppemo/brucetyper/actions/workflows/tests.yml/badge.svg" alt="Tests"></a>
   <a href="https://codecov.io/gh/duceppemo/brucetyper"><img src="https://codecov.io/gh/duceppemo/brucetyper/graph/badge.svg" alt="Coverage"></a>
   <a href="https://pypi.org/project/brucetyper/"><img src="https://img.shields.io/pypi/v/brucetyper" alt="PyPI"></a>
+  <a href="https://bioconda.github.io/recipes/brucetyper/README.html"><img src="https://img.shields.io/conda/vn/bioconda/brucetyper" alt="Bioconda"></a>
   <img src="https://img.shields.io/badge/python-3.7%2B-blue" alt="Python 3.7+">
   <a href="LICENSE"><img src="https://img.shields.io/github/license/duceppemo/brucetyper" alt="License"></a>
   <a href="https://github.com/duceppemo/brucetyper/wiki"><img src="https://img.shields.io/badge/docs-wiki-informational" alt="Documentation"></a>
@@ -32,6 +33,7 @@ genotype is called. No external PCR tool, no alignment step, no database.
 
 ```bash
 pip install brucetyper
+# or: conda install -c conda-forge -c bioconda brucetyper
 
 # Every assay, on a folder of assemblies
 brucetyper -i genomes/ -o results/

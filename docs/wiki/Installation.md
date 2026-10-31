@@ -21,6 +21,30 @@ brucetyper --version
 brucetyper -i genomes/ -o results/
 ```
 
+## conda
+
+```bash
+conda install -c conda-forge -c bioconda brucetyper
+```
+
+`mamba` resolves the same thing considerably faster:
+
+```bash
+mamba install -c conda-forge -c bioconda brucetyper
+```
+
+Or set the channels up once, which is what Bioconda recommends, and drop the `-c` flags from
+every later install:
+
+```bash
+conda config --add channels bioconda
+conda config --add channels conda-forge
+conda config --set channel_priority strict
+conda install brucetyper
+```
+
+The recipe is `noarch`, so the one build serves every platform conda supports.
+
 ## pipx
 
 A command line tool in its own isolated environment, which keeps Biopython out of your user
